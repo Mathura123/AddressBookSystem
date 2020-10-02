@@ -14,6 +14,7 @@ namespace AddressBookSystem
         public int zip;
         public int phoneNo;
         public string email;
+        public static List<Contacts> listContacts = new List<Contacts>();
         public Contacts()
         {
         }
@@ -47,8 +48,8 @@ namespace AddressBookSystem
             Console.WriteLine("Enter Email Id");
             string personEmail = Console.ReadLine();
             string name = fName;
-            Contacts objCon = new Contacts(fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
-            AddressBookMain.listCon.Add(objCon);
+            Contacts objContacts = new Contacts(fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
+            listContacts.Add(objContacts);
             Console.WriteLine("Contact has been Added");
         }
         public static void EditContact()
@@ -58,7 +59,7 @@ namespace AddressBookSystem
             Console.WriteLine("Enter Second Name");
             string sName = Console.ReadLine();
             bool personFound = false;
-            foreach(Contacts item in AddressBookMain.listCon)
+            foreach(Contacts item in listContacts)
             {
                 if(((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower()))
                 {
@@ -91,7 +92,7 @@ namespace AddressBookSystem
             string sName = Console.ReadLine();
             bool personFound = false;
             Contacts personToDelete = new Contacts();
-            foreach (Contacts item in AddressBookMain.listCon)
+            foreach (Contacts item in listContacts)
             {
                 if (((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower()))
                 {
@@ -100,7 +101,7 @@ namespace AddressBookSystem
                     Console.WriteLine("Person has been Removed from Contacts");
                 }
             }
-            AddressBookMain.listCon.Remove(personToDelete);
+            listContacts.Remove(personToDelete);
             if (personFound == false)
             {
                 Console.WriteLine("Person not found");
