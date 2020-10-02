@@ -14,7 +14,9 @@ namespace AddressBookSystem
         public int zip;
         public int phoneNo;
         public string email;
-
+        public Contacts()
+        {
+        }
         public Contacts(string firstName, string secondName, string address, string city, string state, int zip, int phoneNo, string email)
         {
             this.firstName = firstName;
@@ -80,7 +82,29 @@ namespace AddressBookSystem
             {
                 Console.WriteLine("Person not found");
             }
-
+        }
+        public static void DeleteContact()
+        {
+            Console.WriteLine("Enter First Name");
+            string fName = Console.ReadLine();
+            Console.WriteLine("Enter Second Name");
+            string sName = Console.ReadLine();
+            bool personFound = false;
+            Contacts personToDelete = new Contacts();
+            foreach (Contacts item in AddressBookMain.listCon)
+            {
+                if (((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower()))
+                {
+                    personToDelete= item;
+                    personFound = true;
+                    Console.WriteLine("Person has been Removed from Contacts");
+                }
+            }
+            AddressBookMain.listCon.Remove(personToDelete);
+            if (personFound == false)
+            {
+                Console.WriteLine("Person not found");
+            }
         }
     }
 }
