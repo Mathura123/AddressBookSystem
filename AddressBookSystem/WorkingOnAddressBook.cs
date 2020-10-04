@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace AddressBookSystem
@@ -8,7 +9,7 @@ namespace AddressBookSystem
     {
         internal static void AddressBook(string addressBookName)
         {
-            Console.WriteLine("Enter 1 to Add Contact\nEnter 2 to Edit Contact\nEnter 3 to Delete Person From Contact\nEnter 4 to Create new Address Book or to Work on saved Address Book\nEnter 5 to Exit");
+            Console.WriteLine("Enter 1 to Add Contact\nEnter 2 to Edit Contact\nEnter 3 to Delete Person From Contact\nEnter 4 to Create new Address Book or to Work on saved Address Book\nEnter 5 to show all contacts\nEnter 6 to Exit");
             int key = Convert.ToInt32(Console.ReadLine());
             switch (key)
             {
@@ -34,6 +35,8 @@ namespace AddressBookSystem
                     AddressBookMain.addressBookDict[addressBookName] = new Contacts();
                     AddressBookMain.addressBookDict[addressBookName].AllContacts(addressBookName);
                     AddressBook(addressBookName);
+                    break;
+                case 6:
                     break;
                 default:
                     Console.WriteLine("Try Again. Wrong key");

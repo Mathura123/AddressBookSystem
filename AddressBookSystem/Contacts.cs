@@ -9,17 +9,17 @@ namespace AddressBookSystem
         internal string addressBookName;
         internal string firstName;
         internal string secondName;
-        internal string address;
-        internal string city;
-        internal string state;
-        internal int zip;
-        internal int phoneNo;
-        internal string email;
+        internal string address = "";
+        internal string city = "";
+        internal string state = "";
+        internal string zip ="";
+        internal string phoneNo = "";
+        internal string email = "";
         internal static List<Contacts> listContacts = new List<Contacts>();
         internal Contacts()
         {
         }
-        internal Contacts(string addressBookName,string firstName, string secondName, string address, string city, string state, int zip, int phoneNo, string email)
+        internal Contacts(string addressBookName,string firstName, string secondName, string address, string city, string state, string zip, string phoneNo, string email)
         {
             this.addressBookName = addressBookName;
             this.firstName = firstName;
@@ -33,21 +33,21 @@ namespace AddressBookSystem
         }
         internal void AddContacts(string addressBookName)
         {
-            Console.WriteLine("Enter First Name");
+            Console.Write("First Name : ");
             string fName = Console.ReadLine();
-            Console.WriteLine("Enter Second Name");
+            Console.Write("Second Name : ");
             string sName = Console.ReadLine();
-            Console.WriteLine("Enter Address");
+            Console.Write("Address : ");
             string personAddress= Console.ReadLine();
-            Console.WriteLine("Enter City");
+            Console.Write("City : ");
             string personCity = Console.ReadLine();
-            Console.WriteLine("Enter State");
+            Console.Write("State : ");
             string personState = Console.ReadLine();
-            Console.WriteLine("Enter Zip");
-            int personZip = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter Phone Number");
-            int phoneNumber = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter Email Id");
+            Console.Write("Zip : ");
+            string personZip = Console.ReadLine();
+            Console.Write("Phone Number : ");
+            string phoneNumber = Console.ReadLine();
+            Console.Write("Email Id : ");
             string personEmail = Console.ReadLine();
             Contacts objContacts = new Contacts(addressBookName,fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
             listContacts.Add(objContacts);
@@ -71,9 +71,9 @@ namespace AddressBookSystem
                     Console.WriteLine("Enter new State");
                     item.state = Console.ReadLine();
                     Console.WriteLine("Enter new Address");
-                    item.zip = Convert.ToInt32(Console.ReadLine());
+                    item.zip = Console.ReadLine();
                     Console.WriteLine("Enter new Phone Number");
-                    item.phoneNo = Convert.ToInt32(Console.ReadLine());
+                    item.phoneNo = Console.ReadLine();
                     Console.WriteLine("Enter new Email");
                     item.email = Console.ReadLine();
                     personFound = true;
@@ -114,7 +114,7 @@ namespace AddressBookSystem
             {
                 if (item.addressBookName == addressBookName)
                 {
-                    Console.WriteLine(item.firstName + " " + item.secondName);
+                    Console.WriteLine("First Name : " + item.firstName + " Second Name : " + item.secondName + " Address : " +item.address + " City : " + item.city+" State : " + item.state+" zip : " + item.zip);
                 }
             }
         }
