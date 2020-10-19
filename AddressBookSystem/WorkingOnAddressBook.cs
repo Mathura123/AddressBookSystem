@@ -17,7 +17,7 @@ namespace AddressBookSystem
             addressBookObj.AddressBookName = Console.ReadLine();
             AddressBookDetailsValidation.ValidateAddressBookName(addressBookObj);
             Label1:
-            Console.WriteLine("\nEnter 1 to Add Contact\nEnter 2 to Edit Contact\nEnter 3 to Delete Person From Contact\nEnter 4 to Create new Address Book or to Work on saved Address Book\nEnter 5 to show all contacts\nEnter 6 to Exit");
+            Console.WriteLine("\nEnter 1 to Add Contact\nEnter 2 to Edit Contact\nEnter 3 to Delete Person From Contact\nEnter 4 to Create new Address Book or to Work on saved Address Book\nEnter 5 to Search Person by City or State\nEnter 6 to show all contacts\nEnter 7 to Exit");
             int key = Convert.ToInt32(Console.ReadLine());
             switch (key)
             {
@@ -51,6 +51,9 @@ namespace AddressBookSystem
                     AddressBook();
                     break;
                 case 5:
+                        Contacts.SearchPersonByCityOrState();
+                    goto Label1;
+                case 6:
                     try
                     {
                         AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AllContacts(addressBookObj.AddressBookName);
@@ -61,7 +64,7 @@ namespace AddressBookSystem
                         goto Label1;
                     }
                     goto Label1;
-                case 6:
+                case 7:
                     break;
                 default:
                     Console.WriteLine("Try Again. Wrong key");
