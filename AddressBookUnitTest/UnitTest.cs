@@ -11,7 +11,9 @@ namespace AddressBookUnitTest
         {
             bool expected = true;
             string addressBookName = "A1";
-            bool result =AddressBookDetailsValidation.ValidateAddressBookName(addressBookName);
+            WorkingOnAddressBook addressBookObj = new WorkingOnAddressBook();
+            addressBookObj.AddressBookName = addressBookName;
+            bool result =AddressBookDetailsValidation.ValidateAddressBookName(addressBookObj);
             Assert.AreEqual(result, expected);
         }
     }

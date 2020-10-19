@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AddressBookSystem
 {
@@ -10,13 +12,13 @@ namespace AddressBookSystem
         private static List<Contacts> listContacts = new List<Contacts>();
         public string AddressBookName { get; set; }
 
-        [Required(ErrorMessage ="{0} is Required")]
-        [StringLength(100,MinimumLength =3,ErrorMessage ="{0} must be of atleast of 3 characters")]
+        [Required(ErrorMessage = "{0} is Required")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "{0} must be of atleast of 3 characters")]
         public string FirstName { get; set; }
-        [Required(ErrorMessage ="{0} is Required")]
-        [StringLength(100,MinimumLength =3,ErrorMessage ="{0} must be of atleast of 3 characters")]
+        [Required(ErrorMessage = "{0} is Required")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "{0} must be of atleast of 3 characters")]
         public string LastName { get; set; }
-        public string Address { get; set; } 
+        public string Address { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Zip { get; set; }
@@ -29,7 +31,7 @@ namespace AddressBookSystem
         public Contacts()
         {
         }
-        public Contacts(string addressBookName,string firstName, string secondName, string address, string city, string state, string zip, string phoneNo, string email)
+        public Contacts(string addressBookName, string firstName, string secondName, string address, string city, string state, string zip, string phoneNo, string email)
         {
             AddressBookName = addressBookName;
             FirstName = firstName;
@@ -43,12 +45,18 @@ namespace AddressBookSystem
         }
         public void AddContacts(string addressBookName)
         {
+        label2:
             Console.Write("First Name : ");
             string fName = Console.ReadLine();
             Console.Write("Second Name : ");
             string sName = Console.ReadLine();
+            if (SearchDublicates(fName,sName))
+            {
+                Console.WriteLine("This Person is already in " + addressBookName + " Address Book\nTry to add another");
+                goto label2;
+            }
             Console.Write("Address : ");
-            string personAddress= Console.ReadLine();
+            string personAddress = Console.ReadLine();
             Console.Write("City : ");
             string personCity = Console.ReadLine();
             Console.Write("State : ");
@@ -60,6 +68,7 @@ namespace AddressBookSystem
             Console.Write("Email Id : ");
             string personEmail = Console.ReadLine();
             Contacts objContacts = new Contacts(addressBookName, fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
+            
             if (AddressBookDetailsValidation.ValidatePersonDetails(objContacts))
             {
                 listContacts.Add(objContacts);
@@ -77,9 +86,9 @@ namespace AddressBookSystem
             Console.WriteLine("Enter Second Name");
             string sName = Console.ReadLine();
             bool personFound = false;
-            foreach(Contacts item in listContacts)
+            foreach (Contacts item in listContacts)
             {
-                if((((item.FirstName).ToLower() == fName.ToLower()) && ((item.LastName).ToLower() == sName.ToLower())) && item.AddressBookName == addressBookName)
+                if ((((item.FirstName).ToLower() == fName.ToLower()) && ((item.LastName).ToLower() == sName.ToLower())) && item.AddressBookName == addressBookName)
                 {
                     Console.WriteLine("Enter new Address");
                     item.Address = Console.ReadLine();
@@ -94,10 +103,10 @@ namespace AddressBookSystem
                     Console.WriteLine("Enter new Email");
                     item.Email = Console.ReadLine();
                     personFound = true;
-                    Console.WriteLine("Details have been updated in "+ addressBookName);
+                    Console.WriteLine("Details have been updated in " + addressBookName);
                 }
             }
-            if(personFound==false)
+            if (personFound == false)
             {
                 Console.WriteLine("Person not found");
             }
@@ -114,7 +123,7 @@ namespace AddressBookSystem
             {
                 if ((((item.FirstName).ToLower() == fName.ToLower()) && ((item.LastName).ToLower() == sName.ToLower())) && item.AddressBookName == addressBookName)
                 {
-                    personToDelete= item;
+                    personToDelete = item;
                     personFound = true;
                     Console.WriteLine("Person has been Removed from Contacts in " + addressBookName);
                     break;
@@ -132,9 +141,24 @@ namespace AddressBookSystem
             {
                 if (item.AddressBookName == addressBookName)
                 {
-                    Console.WriteLine("\nName : " + item.FirstName +" " + item.LastName + "\nAddress : " +item.Address + "\nCity : " + item.City+"\nState : " + item.State+"\nZip : " + item.Zip+"\n");
+                    Console.WriteLine("\nName : " + item.FirstName + " " + item.LastName + "\nAddress : " + item.Address + "\nCity : " + item.City + "\nState : " + item.State + "\nZip : " + item.Zip + "\n");
                 }
             }
         }
+        private bool SearchDublicates(string firstName, string lastName)
+        {
+            if (listContacts.Any(e => (e.FirstName.Equals(firstName) && e.LastName.Equals(lastName))))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        //public override bool Equals(object obj)
+        //{
+        //    Contacts e = (Contacts)obj;
+        //    return (FirstName.Equals(e.FirstName) && LastName.Equals(e.LastName));
+        //}
+
     }
 }

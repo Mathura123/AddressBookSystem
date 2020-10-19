@@ -10,7 +10,7 @@ namespace AddressBookSystem
         public static void Main()
         {
             Console.WriteLine("Welcome to Address Book Program");
-            Console.WriteLine("*******************************");
+            Console.WriteLine("===============================\n");
             WorkingOnAddressBook.AddressBook();
         }
     }
