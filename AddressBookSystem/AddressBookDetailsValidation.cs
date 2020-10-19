@@ -7,7 +7,7 @@ namespace AddressBookSystem
 {
     public class AddressBookDetailsValidation
     {
-        public static void ValidateAddressBookName(string addressBookName)
+        public static bool ValidateAddressBookName(string addressBookName)
         {
             WorkingOnAddressBook addressBookObj = new WorkingOnAddressBook();
             addressBookObj.AddressBookName = addressBookName;
@@ -22,7 +22,10 @@ namespace AddressBookSystem
                 }
                 Console.WriteLine("Try Again\n");
                 WorkingOnAddressBook.AddressBook();
+                return false;
             }
+            else
+                return true;
         }
         public static bool ValidatePersonDetails(string firstName,string lastName,string phoneNo,string email)
         {
