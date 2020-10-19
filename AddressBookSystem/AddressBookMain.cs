@@ -5,9 +5,9 @@ namespace AddressBookSystem
 {
     class AddressBookMain
     {
-        internal static Dictionary<string, Contacts> addressBookDict = new Dictionary<string, Contacts>();
+        public static Dictionary<string, Contacts> addressBookDict = new Dictionary<string, Contacts>();
 
-        internal static void Main()
+        public static void Main()
         {
             Console.WriteLine("Welcome to Address Book Program");
             Console.WriteLine("*******************************");

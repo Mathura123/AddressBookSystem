@@ -6,20 +6,20 @@ namespace AddressBookSystem
 {
     class Contacts
     {
-        internal string addressBookName;
-        internal string firstName;
-        internal string secondName;
-        internal string address = "";
-        internal string city = "";
-        internal string state = "";
-        internal string zip ="";
-        internal string phoneNo = "";
-        internal string email = "";
-        internal static List<Contacts> listContacts = new List<Contacts>();
-        internal Contacts()
+        private string addressBookName;
+        private string firstName;
+        private string secondName;
+        private string address = "";
+        private string city = "";
+        private string state = "";
+        private string zip ="";
+        private string phoneNo = "";
+        private string email = "";
+        private static List<Contacts> listContacts = new List<Contacts>();
+        public Contacts()
         {
         }
-        internal Contacts(string addressBookName,string firstName, string secondName, string address, string city, string state, string zip, string phoneNo, string email)
+        public Contacts(string addressBookName,string firstName, string secondName, string address, string city, string state, string zip, string phoneNo, string email)
         {
             this.addressBookName = addressBookName;
             this.firstName = firstName;
@@ -31,7 +31,7 @@ namespace AddressBookSystem
             this.phoneNo = phoneNo;
             this.email = email;
         }
-        internal void AddContacts(string addressBookName)
+        public void AddContacts(string addressBookName)
         {
             Console.Write("First Name : ");
             string fName = Console.ReadLine();
@@ -53,7 +53,7 @@ namespace AddressBookSystem
             listContacts.Add(objContacts);
             Console.WriteLine("Contact has been Added to " + addressBookName);
         }
-        internal void EditContact(string addressBookName)
+        public void EditContact(string addressBookName)
         {
             Console.WriteLine("Enter First Name");
             string fName = Console.ReadLine();
@@ -85,7 +85,7 @@ namespace AddressBookSystem
                 Console.WriteLine("Person not found");
             }
         }
-        internal void DeleteContact(string addressBookName)
+        public void DeleteContact(string addressBookName)
         {
             Console.WriteLine("Enter First Name");
             string fName = Console.ReadLine();
@@ -100,6 +100,7 @@ namespace AddressBookSystem
                     personToDelete= item;
                     personFound = true;
                     Console.WriteLine("Person has been Removed from Contacts in " + addressBookName);
+                    break;
                 }
             }
             listContacts.Remove(personToDelete);
@@ -108,7 +109,7 @@ namespace AddressBookSystem
                 Console.WriteLine("Person not found");
             }
         }
-        internal void AllContacts(string addressBookName)
+        public void AllContacts(string addressBookName)
         {
             foreach (Contacts item in listContacts)
             {
