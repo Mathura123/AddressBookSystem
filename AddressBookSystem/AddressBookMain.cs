@@ -11,9 +11,7 @@ namespace AddressBookSystem
         {
             Console.WriteLine("Welcome to Address Book Program");
             Console.WriteLine("*******************************");
-            
             WorkingOnAddressBook.AddressBook();
         }
-        
     }
 }

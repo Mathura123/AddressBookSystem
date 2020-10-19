@@ -17,7 +17,7 @@ namespace AddressBookSystem
             addressBookObj.AddressBookName = Console.ReadLine();
             AddressBookDetailsValidation.ValidateAddressBookName(addressBookObj.AddressBookName);
             Label1:
-            Console.WriteLine("Enter 1 to Add Contact\nEnter 2 to Edit Contact\nEnter 3 to Delete Person From Contact\nEnter 4 to Create new Address Book or to Work on saved Address Book\nEnter 5 to show all contacts\nEnter 6 to Exit");
+            Console.WriteLine("\nEnter 1 to Add Contact\nEnter 2 to Edit Contact\nEnter 3 to Delete Person From Contact\nEnter 4 to Create new Address Book or to Work on saved Address Book\nEnter 5 to show all contacts\nEnter 6 to Exit");
             int key = Convert.ToInt32(Console.ReadLine());
             switch (key)
             {
@@ -25,31 +25,47 @@ namespace AddressBookSystem
                     AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
                     AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AddContacts(addressBookObj.AddressBookName);
                     goto Label1;
-                    break;
                 case 2:
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName].EditContact(addressBookObj.AddressBookName);
+                    try
+                    {
+                        AddressBookMain.addressBookDict[addressBookObj.AddressBookName].EditContact(addressBookObj.AddressBookName);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("\nAddress Book has no Contacts yet\nFirstly Add Contacts\n");
+                        goto Label1;
+                    }
                     goto Label1;
-                    break;
                 case 3:
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
+                    try
+                    {
                     AddressBookMain.addressBookDict[addressBookObj.AddressBookName].DeleteContact(addressBookObj.AddressBookName);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("\nAddress Book has no Contacts yet\nFirstly Add Contacts\n");
+                        goto Label1;
+                    }
                     goto Label1;
-                    break;
                 case 4:
                     AddressBook();
                     break;
                 case 5:
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AllContacts(addressBookObj.AddressBookName);
+                    try
+                    {
+                        AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AllContacts(addressBookObj.AddressBookName);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("\nAddress Book has no Contacts yet\nFirstly Add Contacts\n");
+                        goto Label1;
+                    }
                     goto Label1;
-                    break;
                 case 6:
                     break;
                 default:
                     Console.WriteLine("Try Again. Wrong key");
                     goto Label1;
-                    break;
             }
         }
     }

@@ -24,7 +24,7 @@ namespace AddressBookSystem
                 WorkingOnAddressBook.AddressBook();
             }
         }
-        public static bool ValidatePersonDetails(string firstName,string lastName,string email,string phoneNo)
+        public static bool ValidatePersonDetails(string firstName,string lastName,string phoneNo,string email)
         {
             Contacts contactObj = new Contacts();
             contactObj.FirstName = firstName;
