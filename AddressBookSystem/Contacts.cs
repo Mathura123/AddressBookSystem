@@ -181,6 +181,7 @@ namespace AddressBookSystem
                     Console.WriteLine("Email : " + personDetails.Email + "\n");
                 }
             }
+            Console.WriteLine("\nCount by City is : "+ slNo+"\n");
             Console.WriteLine("\nSearch by State " + state + " are :");
             foreach (Contacts personDetails in statePersonDict.Values)
             {
@@ -198,6 +199,7 @@ namespace AddressBookSystem
                     Console.WriteLine("Email : " + personDetails.Email + "\n");
                 }
             }
+            Console.WriteLine("\nCount by State is : "+ slNo+"\n");
         }
         private bool SearchDublicates(string firstName, string lastName, string addressBookName)
         {
