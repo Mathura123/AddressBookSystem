@@ -10,6 +10,8 @@ namespace AddressBookSystem
     public class Contacts
     {
         private static List<Contacts> listContacts = new List<Contacts>();
+        public static Dictionary<string, Contacts> cityPersonDict = new Dictionary<string, Contacts>();
+        private static Dictionary<string, Contacts> statePersonDict = new Dictionary<string, Contacts>();
         public string AddressBookName { get; set; }
 
         [Required(ErrorMessage = "{0} is Required")]
@@ -72,6 +74,8 @@ namespace AddressBookSystem
             if (AddressBookDetailsValidation.ValidatePersonDetails(objContacts))
             {
                 listContacts.Add(objContacts);
+                cityPersonDict.Add(personCity, objContacts);
+                statePersonDict.Add(personState, objContacts);
                 Console.WriteLine("Contact has been Added to " + addressBookName);
             }
             else
@@ -161,32 +165,38 @@ namespace AddressBookSystem
             Console.WriteLine("Enter State : ");
             string state = Console.ReadLine();
             Console.WriteLine("\nSearch by City " + city + " are :");
-            foreach (Contacts personDetails in listContacts.FindAll(e => (e.City.Equals(city) && e.State.Equals(state))))
+            foreach (Contacts personDetails in cityPersonDict.Values)
             {
-                Console.WriteLine(slNo + " )");
-                Console.WriteLine("Address Book : "+ personDetails.AddressBookName);
-                Console.WriteLine("First Name : "+personDetails.FirstName);
-                Console.WriteLine("Last Name : " + personDetails.LastName);
-                Console.WriteLine("Address : " + personDetails.Address);
-                Console.WriteLine("City : " + personDetails.City);
-                Console.WriteLine("State : " + personDetails.State);
-                Console.WriteLine("Zip : " + personDetails.Zip);
-                Console.WriteLine("Phone No : " + personDetails.PhoneNo);
-                Console.WriteLine("Email : " + personDetails.Email+"\n");
+                if (personDetails.City.Equals(city) && personDetails.State.Equals(state))
+                {
+                    Console.WriteLine(slNo + " )");
+                    Console.WriteLine("Address Book : " + personDetails.AddressBookName);
+                    Console.WriteLine("First Name : " + personDetails.FirstName);
+                    Console.WriteLine("Last Name : " + personDetails.LastName);
+                    Console.WriteLine("Address : " + personDetails.Address);
+                    Console.WriteLine("City : " + personDetails.City);
+                    Console.WriteLine("State : " + personDetails.State);
+                    Console.WriteLine("Zip : " + personDetails.Zip);
+                    Console.WriteLine("Phone No : " + personDetails.PhoneNo);
+                    Console.WriteLine("Email : " + personDetails.Email + "\n");
+                }
             }
             Console.WriteLine("\nSearch by State " + state + " are :");
-            foreach (Contacts personDetails in listContacts.FindAll(e => (e.State.Equals(state))))
+            foreach (Contacts personDetails in statePersonDict.Values)
             {
-                Console.WriteLine(slNo + " )");
-                Console.WriteLine("Address Book : "+ personDetails.AddressBookName);
-                Console.WriteLine("First Name : " + personDetails.FirstName);
-                Console.WriteLine("Last Name : " + personDetails.LastName);
-                Console.WriteLine("Address : " + personDetails.Address);
-                Console.WriteLine("City : " + personDetails.City);
-                Console.WriteLine("State : " + personDetails.State);
-                Console.WriteLine("Zip : " + personDetails.Zip);
-                Console.WriteLine("Phone No : " + personDetails.PhoneNo);
-                Console.WriteLine("Email : " + personDetails.Email+"\n");
+                if (personDetails.State.Equals(state))
+                {
+                    Console.WriteLine(slNo + " )");
+                    Console.WriteLine("Address Book : " + personDetails.AddressBookName);
+                    Console.WriteLine("First Name : " + personDetails.FirstName);
+                    Console.WriteLine("Last Name : " + personDetails.LastName);
+                    Console.WriteLine("Address : " + personDetails.Address);
+                    Console.WriteLine("City : " + personDetails.City);
+                    Console.WriteLine("State : " + personDetails.State);
+                    Console.WriteLine("Zip : " + personDetails.Zip);
+                    Console.WriteLine("Phone No : " + personDetails.PhoneNo);
+                    Console.WriteLine("Email : " + personDetails.Email + "\n");
+                }
             }
         }
         private bool SearchDublicates(string firstName, string lastName, string addressBookName)
