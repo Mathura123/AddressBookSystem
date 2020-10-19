@@ -1,35 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace AddressBookSystem
 {
     class Contacts
     {
-        private string addressBookName;
-        private string firstName;
-        private string secondName;
-        private string address = "";
-        private string city = "";
-        private string state = "";
-        private string zip ="";
-        private string phoneNo = "";
-        private string email = "";
         private static List<Contacts> listContacts = new List<Contacts>();
+        public string AddressBookName { get; set; }
+
+        [Required(ErrorMessage ="{0} is Required")]
+        [StringLength(100,MinimumLength =3,ErrorMessage ="{0} must be of atleast of 3 characters")]
+        public string FirstName { get; set; }
+        [Required(ErrorMessage ="{0} is Required")]
+        [StringLength(100,MinimumLength =3,ErrorMessage ="{0} must be of atleast of 3 characters")]
+        public string LastName { get; set; }
+        public string Address { get; set; } 
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
+        [Phone]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNo { get; set; }
+        [EmailAddress]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
         public Contacts()
         {
         }
         public Contacts(string addressBookName,string firstName, string secondName, string address, string city, string state, string zip, string phoneNo, string email)
         {
-            this.addressBookName = addressBookName;
-            this.firstName = firstName;
-            this.secondName = secondName;
-            this.address = address;
-            this.city = city;
-            this.state = state;
-            this.zip = zip;
-            this.phoneNo = phoneNo;
-            this.email = email;
+            AddressBookName = addressBookName;
+            FirstName = firstName;
+            LastName = secondName;
+            Address = address;
+            City = city;
+            State = state;
+            Zip = zip;
+            PhoneNo = phoneNo;
+            Email = email;
         }
         public void AddContacts(string addressBookName)
         {
@@ -49,9 +59,16 @@ namespace AddressBookSystem
             string phoneNumber = Console.ReadLine();
             Console.Write("Email Id : ");
             string personEmail = Console.ReadLine();
-            Contacts objContacts = new Contacts(addressBookName,fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
-            listContacts.Add(objContacts);
-            Console.WriteLine("Contact has been Added to " + addressBookName);
+            if(AddressBookDetailsValidation.ValidatePersonDetails(fName, sName, phoneNumber, personEmail))
+            {
+                Contacts objContacts = new Contacts(addressBookName, fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
+                listContacts.Add(objContacts);
+                Console.WriteLine("Contact has been Added to " + addressBookName);
+            }
+            else
+            {
+                AddContacts(addressBookName);
+            }
         }
         public void EditContact(string addressBookName)
         {
@@ -62,20 +79,20 @@ namespace AddressBookSystem
             bool personFound = false;
             foreach(Contacts item in listContacts)
             {
-                if((((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower())) && item.addressBookName == addressBookName)
+                if((((item.FirstName).ToLower() == fName.ToLower()) && ((item.LastName).ToLower() == sName.ToLower())) && item.AddressBookName == addressBookName)
                 {
                     Console.WriteLine("Enter new Address");
-                    item.address = Console.ReadLine();
+                    item.Address = Console.ReadLine();
                     Console.WriteLine("Enter new City");
-                    item.city = Console.ReadLine();
+                    item.City = Console.ReadLine();
                     Console.WriteLine("Enter new State");
-                    item.state = Console.ReadLine();
+                    item.State = Console.ReadLine();
                     Console.WriteLine("Enter new Address");
-                    item.zip = Console.ReadLine();
+                    item.Zip = Console.ReadLine();
                     Console.WriteLine("Enter new Phone Number");
-                    item.phoneNo = Console.ReadLine();
+                    item.PhoneNo = Console.ReadLine();
                     Console.WriteLine("Enter new Email");
-                    item.email = Console.ReadLine();
+                    item.Email = Console.ReadLine();
                     personFound = true;
                     Console.WriteLine("Details have been updated in "+ addressBookName);
                 }
@@ -95,7 +112,7 @@ namespace AddressBookSystem
             Contacts personToDelete = new Contacts();
             foreach (Contacts item in listContacts)
             {
-                if ((((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower())) && item.addressBookName == addressBookName)
+                if ((((item.FirstName).ToLower() == fName.ToLower()) && ((item.LastName).ToLower() == sName.ToLower())) && item.AddressBookName == addressBookName)
                 {
                     personToDelete= item;
                     personFound = true;
@@ -113,9 +130,9 @@ namespace AddressBookSystem
         {
             foreach (Contacts item in listContacts)
             {
-                if (item.addressBookName == addressBookName)
+                if (item.AddressBookName == addressBookName)
                 {
-                    Console.WriteLine("First Name : " + item.firstName + " Second Name : " + item.secondName + " Address : " +item.address + " City : " + item.city+" State : " + item.state+" zip : " + item.zip);
+                    Console.WriteLine("\nName : " + item.FirstName +" " + item.LastName + "\nAddress : " +item.Address + "\nCity : " + item.City+"\nState : " + item.State+"\nZip : " + item.Zip+"\n");
                 }
             }
         }
