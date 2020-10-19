@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AddressBookSystem
 {
-    class Contacts
+    public class Contacts
     {
         private static List<Contacts> listContacts = new List<Contacts>();
         public string AddressBookName { get; set; }
@@ -59,9 +59,9 @@ namespace AddressBookSystem
             string phoneNumber = Console.ReadLine();
             Console.Write("Email Id : ");
             string personEmail = Console.ReadLine();
-            if(AddressBookDetailsValidation.ValidatePersonDetails(fName, sName, phoneNumber, personEmail))
+            Contacts objContacts = new Contacts(addressBookName, fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
+            if (AddressBookDetailsValidation.ValidatePersonDetails(objContacts))
             {
-                Contacts objContacts = new Contacts(addressBookName, fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
                 listContacts.Add(objContacts);
                 Console.WriteLine("Contact has been Added to " + addressBookName);
             }

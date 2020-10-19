@@ -7,10 +7,8 @@ namespace AddressBookSystem
 {
     public class AddressBookDetailsValidation
     {
-        public static bool ValidateAddressBookName(string addressBookName)
+        public static bool ValidateAddressBookName(WorkingOnAddressBook addressBookObj)
         {
-            WorkingOnAddressBook addressBookObj = new WorkingOnAddressBook();
-            addressBookObj.AddressBookName = addressBookName;
             ValidationContext context = new ValidationContext(addressBookObj);
             List<ValidationResult> results = new List<ValidationResult>();
             bool valid = Validator.TryValidateObject(addressBookObj, context, results, true);
@@ -27,13 +25,8 @@ namespace AddressBookSystem
             else
                 return true;
         }
-        public static bool ValidatePersonDetails(string firstName,string lastName,string phoneNo,string email)
+        public static bool ValidatePersonDetails(Contacts contactObj)
         {
-            Contacts contactObj = new Contacts();
-            contactObj.FirstName = firstName;
-            contactObj.LastName = lastName;
-            contactObj.PhoneNo = phoneNo;
-            contactObj.Email = email;
             ValidationContext context = new ValidationContext(contactObj);
             List<ValidationResult> results = new List<ValidationResult>();
             bool valid = Validator.TryValidateObject(contactObj, context, results, true);

@@ -15,7 +15,7 @@ namespace AddressBookSystem
             Console.WriteLine("Enter the Address Book Name or Enter Name of the saved Address Book");
             WorkingOnAddressBook addressBookObj = new WorkingOnAddressBook();
             addressBookObj.AddressBookName = Console.ReadLine();
-            AddressBookDetailsValidation.ValidateAddressBookName(addressBookObj.AddressBookName);
+            AddressBookDetailsValidation.ValidateAddressBookName(addressBookObj);
             Label1:
             Console.WriteLine("\nEnter 1 to Add Contact\nEnter 2 to Edit Contact\nEnter 3 to Delete Person From Contact\nEnter 4 to Create new Address Book or to Work on saved Address Book\nEnter 5 to show all contacts\nEnter 6 to Exit");
             int key = Convert.ToInt32(Console.ReadLine());
