@@ -50,7 +50,7 @@ namespace AddressBookSystem
             string fName = Console.ReadLine();
             Console.Write("Second Name : ");
             string sName = Console.ReadLine();
-            if (SearchDublicates(fName,sName))
+            if (SearchDublicates(fName,sName,addressBookName))
             {
                 Console.WriteLine("\nThis Person is already in " + addressBookName + " Address Book\nTry to add another");
                 goto label2;
@@ -145,9 +145,9 @@ namespace AddressBookSystem
                 }
             }
         }
-        private bool SearchDublicates(string firstName, string lastName)
+        private bool SearchDublicates(string firstName, string lastName,string addressBookName)
         {
-            if (listContacts.Any(e => (e.FirstName.Equals(firstName) && e.LastName.Equals(lastName))))
+            if (listContacts.Any(e => (e.FirstName.Equals(firstName) && e.LastName.Equals(lastName) && e.AddressBookName.Equals(addressBookName))))
             {
                 return true;
             }
