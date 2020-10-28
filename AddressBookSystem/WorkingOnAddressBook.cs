@@ -35,7 +35,7 @@ namespace AddressBookSystem
                 "Enter 13 : Exit");
             Console.Write("Your Entry : ");
             int key = Convert.ToInt32(Console.ReadLine());
-            AddressBookFileIO.StoreAddressBookDetailsInContactsList();
+            //AddressBookFileIO.StoreAddressBookDetailsInContactsList();
             switch (key)
             {
                 case 1:
@@ -99,11 +99,11 @@ namespace AddressBookSystem
                     break;
                 case 11:
                     AddressBookFileIO.WriteAddressBookCSV();
-                    AddressBook();
+                    WorkAddressBook(addressBookObj);
                     break;
                 case 12:
                     AddressBookFileIO.ReadAddressBookCSV();
-                    AddressBook();
+                    WorkAddressBook(addressBookObj);
                     break;
                 case 13:
                     break;

@@ -5,13 +5,14 @@ using System.IO;
 using CsvHelper;
 using System.Globalization;
 using System.Linq;
+using AddressBookSystem;
+using Newtonsoft.Json;
+
 
 namespace AddressBookSystem
 {
     public class AddressBookFileIO
     {
-        private static object csvExport;
-
         public static void WriteIntoAddressBook()
         {
             string path = @"F:\MyPrograms\Assignments\A4-AddressBook\AddressBookSystem\AddressBookSystem\Utility\AddressBook.txt";
@@ -95,7 +96,35 @@ namespace AddressBookSystem
                 }
             }
         }
+        public static void ReadAddressBookJSON()
+        {
+            string path = @"F:\MyPrograms\Assignments\A4-AddressBook\AddressBookSystem\AddressBookSystem\Utility\AddressBook.json";
 
+            IList<Contacts> addressDatas = JsonConvert.DeserializeObject<IList<Contacts>>(File.ReadAllText(path));
+            Console.WriteLine("-----------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Read Data Successfully from address book JOSN");
+            Console.ResetColor();
+            foreach (Contacts personDetail in addressDatas)
+            {
+                Console.WriteLine(personDetail);
+            }
+        }
+        public static void WriteAddressBookJSON()
+        {
+            string path = @"F:\MyPrograms\Assignments\A4-AddressBook\AddressBookSystem\AddressBookSystem\Utility\AddressBook.json";
+            JsonSerializer jsonSerializer = new JsonSerializer();
+            using (StreamWriter streamWriter = new StreamWriter(path))
+            using (JsonWriter writer = new JsonTextWriter(streamWriter))
+            {
+                Console.WriteLine("-----------------------------------------");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Saved Data Successfully to Address Book JSON");
+                Console.ResetColor();
+                Contacts.SortOnConditionChooses();
+                jsonSerializer.Serialize(writer, Contacts.listContacts); Console.ForegroundColor = ConsoleColor.Red;
+            }
+        }
     }
 }
 
