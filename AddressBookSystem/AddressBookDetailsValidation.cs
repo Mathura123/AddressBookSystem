@@ -6,7 +6,6 @@
     public class AddressBookDetailsValidation
     {
         //For validating AddressBookName and person details
-        //returns false if AddressBookName is null
         public static bool Validate(object obj)
         {
             ValidationContext context = new ValidationContext(obj);

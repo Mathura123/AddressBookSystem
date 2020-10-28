@@ -53,12 +53,12 @@
             if (AddressBookDetailsValidation.Validate(objContacts))
             {
                 listContacts.Add(objContacts);
-                PrintInRed($"Contact has been Added to {addressBookName}",false);
+                PrintInRed($"Contact has been Added to {addressBookName}", false);
             }
             //Given Error if objContacts is invalid 
             else
             {
-                PrintInMagenta($"Contact has not been Added to",false);
+                PrintInMagenta($"Contact has not been Added to", false);
                 AddContacts(addressBookName);
             }
         }
@@ -150,7 +150,7 @@
             Console.Write("Enter State : ");
             string state = Console.ReadLine();
             PrintInRed("Search by City " + city + " are :\n");
-            foreach (Contacts personDetails in listContacts.Where(x => (x.City.Equals(city) && x.State.Equals(state))))
+            foreach (Contacts personDetails in listContacts.Where(x => (x.City.ToLower().Equals(city.ToLower()) && x.State.ToLower().Equals(state.ToLower()))))
             {
                 Console.WriteLine(personDetails);
                 slNo++;
@@ -181,7 +181,7 @@
         //Overrides ToString Method for object of Contacts Class
         public override string ToString()
         {
-            return ($"AddressBookName : {AddressBookName} ,Name : {FirstName} {LastName} ,Address : {Address} ,City {City} ," +
+            return ($"AddressBookName : {AddressBookName} ,Name : {FirstName} {LastName} ,Address : {Address} ,City : {City} ," +
                 $"State : {State} ,Zip : {Zip} ," +
                 $"PhoneNo : {PhoneNo} ,Email : {Email}");
         }
@@ -190,10 +190,7 @@
             sortType = SortingType.SORT_BY_NAME;
             listContacts.Sort(delegate (Contacts x, Contacts y)
             {
-                if (x.FirstName.CompareTo(y.FirstName) == 0)
-                    return x.LastName.CompareTo(y.LastName);
-                else
-                    return x.FirstName.CompareTo(y.FirstName);
+                return (x.FirstName.ToLower() + x.LastName.ToLower()).CompareTo((y.FirstName.ToLower() + y.LastName.ToLower()));
             });
         }
         public static void SortByCity()
@@ -201,7 +198,7 @@
             sortType = SortingType.SORT_BY_CITY;
             listContacts.Sort(delegate (Contacts x, Contacts y)
             {
-                return x.City.CompareTo(y.City);
+                return (x.City.ToLower()).CompareTo((y.City.ToLower()));
             });
         }
         public static void SortByState()
@@ -209,7 +206,7 @@
             sortType = SortingType.SORT_BY_STATE;
             listContacts.Sort(delegate (Contacts x, Contacts y)
             {
-                return x.State.CompareTo(y.State);
+                return (x.State.ToLower()).CompareTo((y.State.ToLower()));
             });
         }
         public static void SortByZip()
@@ -217,7 +214,7 @@
             sortType = SortingType.SORT_BY_ZIP;
             listContacts.Sort(delegate (Contacts x, Contacts y)
             {
-                return x.Zip.CompareTo(y.Zip);
+                return (x.Zip).CompareTo((y.Zip));
             });
         }
         public static void SortOnConditionChooses()
@@ -228,7 +225,7 @@
                 SortByCity();
             if (sortType == SortingType.SORT_BY_STATE)
                 SortByState();
-            if(sortType == SortingType.SORT_BY_NAME)
+            if (sortType == SortingType.SORT_BY_NAME)
                 SortByName();
         }
         private static string[] AskDetailsForAdding(string addressBookName)

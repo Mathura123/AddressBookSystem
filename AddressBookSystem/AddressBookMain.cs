@@ -8,8 +8,9 @@
         public static void Main()
         {
             Contacts.PrintInRed("*****Welcome to Address Book Program*****", false);
-            //Calling AddressBook Method for Choosing Option
+            //For storing saved data from file in listContacts
             AddressBookFileIO.StoreAddressBookDetailsInContactsList();
+            //Calling AddressBook Method for Choosing Option
             WorkingOnAddressBook.AddressBook();
         }
     }
