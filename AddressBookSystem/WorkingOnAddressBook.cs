@@ -83,7 +83,9 @@ namespace AddressBookSystem
                 "Enter 8 : Sort all contacts by State\n" +
                 "Enter 9 : Sort all contacts by Zip\n" +
                 "Enter 10 : View all Contacts\n" +
-                "Enter 11 : Exit");
+                "Enter 11 : Save Address Book\n" +
+                "Enter 12 : To Display Saved Address Books\n" +
+                "Enter 13 : Exit");
             Console.Write("Your Entry : ");
             int key = Convert.ToInt32(Console.ReadLine());
             switch (key)
@@ -125,7 +127,7 @@ namespace AddressBookSystem
                     WorkAddressBook(addressBookObj);
                     break;
                 case 6:
-                    Contacts.SortByName(); 
+                    Contacts.SortByName();
                     Console.WriteLine("-----------------------------------------");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Sort by Name Selected");
@@ -169,6 +171,14 @@ namespace AddressBookSystem
                     }
                     break;
                 case 11:
+                    AddressBookFileIO.WriteIntoAddressBook();
+                    AddressBook();
+                    break;
+                case 12:
+                    AddressBookFileIO.ReadAddressBook();
+                    AddressBook();
+                    break;
+                case 13:
                     break;
                 default:
                     Console.WriteLine("Try Again. Wrong key");

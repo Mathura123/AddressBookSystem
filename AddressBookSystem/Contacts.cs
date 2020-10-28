@@ -7,7 +7,7 @@ namespace AddressBookSystem
 {
     public class Contacts
     {
-        private static List<Contacts> listContacts = new List<Contacts>();
+        public static List<Contacts> listContacts = new List<Contacts>();
         private static SortingType sortType;
         public string AddressBookName { get; set; }
         [Required(ErrorMessage = "{0} is Required")]
@@ -283,7 +283,7 @@ namespace AddressBookSystem
                 return x.Zip.CompareTo(y.Zip);
             });
         }
-        private static void SortOnConditionChooses()
+        public static void SortOnConditionChooses()
         {
             if (sortType == SortingType.SORT_BY_ZIP)
                 SortByZip();
