@@ -15,9 +15,18 @@ namespace AddressBookSystem
             {
                 foreach (ValidationResult TotalResult in results)
                 {
-                    Console.WriteLine("Error Msg : {0}{1}", TotalResult.ErrorMessage, Environment.NewLine);
+                    Console.WriteLine("-----------------------------------------");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("Error Msg : ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write($"{TotalResult.ErrorMessage}\n");
+                    Console.ResetColor();
                 }
-                Console.WriteLine("Try Again\n");
+                Console.WriteLine("-----------------------------------------");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("Try Again");
+                Console.ResetColor();
+                Console.WriteLine("-----------------------------------------");
                 WorkingOnAddressBook.AddressBook();
                 return false;
             }
@@ -33,9 +42,18 @@ namespace AddressBookSystem
             {
                 foreach (ValidationResult TotalResult in results)
                 {
-                    Console.WriteLine("\nError Msg : {0}", TotalResult.ErrorMessage);
+                    Console.WriteLine("-----------------------------------------");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("Error Msg : ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write($"{TotalResult.ErrorMessage}\n");
+                    Console.ResetColor();
                 }
-                Console.WriteLine("\nTry Again\nContacts not Added\n");
+                Console.WriteLine("-----------------------------------------");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("Try Again");
+                Console.ResetColor();
+                Console.WriteLine("-----------------------------------------");
                 return false;
             }
             else
