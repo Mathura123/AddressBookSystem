@@ -12,6 +12,8 @@ namespace AddressBookSystem
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Welcome to Address Book Program");
             Console.ResetColor();
+            //Calling AddressBook Method for Choosing Option
+            AddressBookFileIO.StoreAddressBookDetailsInContactsList();
             WorkingOnAddressBook.AddressBook();
         }
     }

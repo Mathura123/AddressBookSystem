@@ -6,6 +6,7 @@ namespace AddressBookSystem
 {
     public class AddressBookDetailsValidation
     {
+        //returns false if AddressBookName is null
         public static bool ValidateAddressBookName(WorkingOnAddressBook addressBookObj)
         {
             ValidationContext context = new ValidationContext(addressBookObj);
@@ -33,6 +34,7 @@ namespace AddressBookSystem
             else
                 return true;
         }
+        //Validate person details
         public static bool ValidatePersonDetails(Contacts contactObj)
         {
             ValidationContext context = new ValidationContext(contactObj);

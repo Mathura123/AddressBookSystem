@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 namespace AddressBookSystem
 {
@@ -16,10 +13,19 @@ namespace AddressBookSystem
             Console.Write("Enter the new/saved Address Book Name : ");
             WorkingOnAddressBook addressBookObj = new WorkingOnAddressBook();
             addressBookObj.AddressBookName = Console.ReadLine();
+            //Validates AddressBookName. Calls Address Book method if AddressBookName is null
             AddressBookDetailsValidation.ValidateAddressBookName(addressBookObj);
             WorkAddressBook(addressBookObj);
         }
-        public static void WorkAddressBook(WorkingOnAddressBook addressBookObj)
+        private static void WorkAddressBook(WorkingOnAddressBook addressBookObj)
+        {
+            AskAddressBookOption();
+            Console.Write("Your Entry : ");
+            int key = Convert.ToInt32(Console.ReadLine());
+            //For Storing Saved Data in CSV File to Contact List
+            ActionWithGivenKey(key, addressBookObj);
+        }
+        private static void AskAddressBookOption()
         {
             Console.WriteLine("-----------------------------------------\n" +
                 "Enter 1 : Add Contact\nEnter 2 : Edit Contact\nEnter 3 : Delete Person From Contact\n" +
@@ -33,33 +39,39 @@ namespace AddressBookSystem
                 "Enter 11 : Save Address Book\n" +
                 "Enter 12 : To Display Saved Address Books\n" +
                 "Enter 13 : Exit");
-            Console.Write("Your Entry : ");
-            int key = Convert.ToInt32(Console.ReadLine());
-            //AddressBookFileIO.StoreAddressBookDetailsInContactsList();
+        }
+        private static void ActionWithGivenKey(int key, WorkingOnAddressBook addressBookObj)
+        {
             switch (key)
             {
+                //For Adding new Contact
                 case 1:
                     AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
                     AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AddContacts(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
+                //For Editing the Contacts
                 case 2:
                     AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
                     AddressBookMain.addressBookDict[addressBookObj.AddressBookName].EditContact(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
+                //For Deleting Contacts
                 case 3:
                     AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
                     AddressBookMain.addressBookDict[addressBookObj.AddressBookName].DeleteContact(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
+                //For opening new/saved address book
                 case 4:
                     AddressBook();
                     break;
+                //Search By city/state
                 case 5:
                     Contacts.SearchPersonByCityOrState();
                     WorkAddressBook(addressBookObj);
                     break;
+                //Sort by Name
                 case 6:
                     Contacts.SortByName();
                     Console.WriteLine("-----------------------------------------");
@@ -68,6 +80,7 @@ namespace AddressBookSystem
                     Console.ResetColor();
                     WorkAddressBook(addressBookObj);
                     break;
+                //Sort by City
                 case 7:
                     Contacts.SortByCity();
                     Console.WriteLine("-----------------------------------------");
@@ -76,6 +89,7 @@ namespace AddressBookSystem
                     Console.ResetColor();
                     WorkAddressBook(addressBookObj);
                     break;
+                //Sort by State
                 case 8:
                     Contacts.SortByState();
                     Console.WriteLine("-----------------------------------------");
@@ -84,6 +98,7 @@ namespace AddressBookSystem
                     Console.ResetColor();
                     WorkAddressBook(addressBookObj);
                     break;
+                //Sort by Zip
                 case 9:
                     Contacts.SortByZip();
                     Console.WriteLine("-----------------------------------------");
@@ -92,19 +107,23 @@ namespace AddressBookSystem
                     Console.ResetColor();
                     WorkAddressBook(addressBookObj);
                     break;
+                //View All Contacts
                 case 10:
                     AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
                     AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AllContacts(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
+                //Write to JSON File
                 case 11:
                     AddressBookFileIO.WriteAddressBookCSV();
                     WorkAddressBook(addressBookObj);
                     break;
+                //Read JSON File
                 case 12:
                     AddressBookFileIO.ReadAddressBookCSV();
                     WorkAddressBook(addressBookObj);
                     break;
+                //Exit
                 case 13:
                     break;
                 default:
