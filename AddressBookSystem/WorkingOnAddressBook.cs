@@ -9,7 +9,7 @@ namespace AddressBookSystem
         public string AddressBookName { get; set; }
         public static void AddressBook()
         {
-            Console.WriteLine("===============================");
+            Console.WriteLine("=========================================");
             Console.Write("Enter the new/saved Address Book Name : ");
             WorkingOnAddressBook addressBookObj = new WorkingOnAddressBook();
             addressBookObj.AddressBookName = Console.ReadLine();
@@ -35,9 +35,9 @@ namespace AddressBookSystem
                 "Enter 7 : Sort all contacts by City\n" +
                 "Enter 8 : Sort all contacts by State\n" +
                 "Enter 9 : Sort all contacts by Zip\n" +
-                "Enter 10 : View all Contacts\n" +
-                "Enter 11 : Save Address Book\n" +
-                "Enter 12 : To Display Saved Address Books\n" +
+                "Enter 10 : View all Contacts in this Address Book\n" +
+                "Enter 11 : View all Contacts\n"+
+                "Enter 12 : Save Address Book\n" +
                 "Enter 13 : Exit");
         }
         private static void ActionWithGivenKey(int key, WorkingOnAddressBook addressBookObj)
@@ -113,14 +113,14 @@ namespace AddressBookSystem
                     AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AllContacts(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
-                //Write to JSON File
+                //Read JSON File
                 case 11:
-                    AddressBookFileIO.WriteAddressBookCSV();
+                    AddressBookFileIO.ReadAddressBookJSON();
                     WorkAddressBook(addressBookObj);
                     break;
-                //Read JSON File
+                //Write to JSON File
                 case 12:
-                    AddressBookFileIO.ReadAddressBookCSV();
+                    AddressBookFileIO.WriteAddressBookJSON();
                     WorkAddressBook(addressBookObj);
                     break;
                 //Exit
