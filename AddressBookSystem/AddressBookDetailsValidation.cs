@@ -1,61 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace AddressBookSystem
+﻿namespace AddressBookSystem
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
     public class AddressBookDetailsValidation
     {
+        //For validating AddressBookName and person details
         //returns false if AddressBookName is null
-        public static bool ValidateAddressBookName(WorkingOnAddressBook addressBookObj)
+        public static bool Validate(object obj)
         {
-            ValidationContext context = new ValidationContext(addressBookObj);
+            ValidationContext context = new ValidationContext(obj);
             List<ValidationResult> results = new List<ValidationResult>();
-            bool valid = Validator.TryValidateObject(addressBookObj, context, results, true);
+            bool valid = Validator.TryValidateObject(obj, context, results, true);
             if (!valid)
             {
                 foreach (ValidationResult TotalResult in results)
                 {
-                    Console.WriteLine("-----------------------------------------");
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write("Error Msg : ");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write($"{TotalResult.ErrorMessage}\n");
-                    Console.ResetColor();
+                    Contacts.PrintInMagenta($"Error Msg : {TotalResult.ErrorMessage}");
                 }
-                Console.WriteLine("-----------------------------------------");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine("Try Again");
-                Console.ResetColor();
-                Console.WriteLine("-----------------------------------------");
-                WorkingOnAddressBook.AddressBook();
-                return false;
-            }
-            else
-                return true;
-        }
-        //Validate person details
-        public static bool ValidatePersonDetails(Contacts contactObj)
-        {
-            ValidationContext context = new ValidationContext(contactObj);
-            List<ValidationResult> results = new List<ValidationResult>();
-            bool valid = Validator.TryValidateObject(contactObj, context, results, true);
-            if (!valid)
-            {
-                foreach (ValidationResult TotalResult in results)
-                {
-                    Console.WriteLine("-----------------------------------------");
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write("Error Msg : ");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write($"{TotalResult.ErrorMessage}\n");
-                    Console.ResetColor();
-                }
-                Console.WriteLine("-----------------------------------------");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine("Try Again");
-                Console.ResetColor();
-                Console.WriteLine("-----------------------------------------");
+                Contacts.PrintInMagenta($"Try Again");
                 return false;
             }
             else

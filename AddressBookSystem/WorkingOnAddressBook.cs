@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace AddressBookSystem
+﻿namespace AddressBookSystem
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class WorkingOnAddressBook
     {
         [Required(ErrorMessage = "{0} is Required")]
@@ -14,14 +14,26 @@ namespace AddressBookSystem
             WorkingOnAddressBook addressBookObj = new WorkingOnAddressBook();
             addressBookObj.AddressBookName = Console.ReadLine();
             //Validates AddressBookName. Calls Address Book method if AddressBookName is null
-            AddressBookDetailsValidation.ValidateAddressBookName(addressBookObj);
+            if (!AddressBookDetailsValidation.Validate(addressBookObj))
+                AddressBook();
             WorkAddressBook(addressBookObj);
         }
         private static void WorkAddressBook(WorkingOnAddressBook addressBookObj)
         {
             AskAddressBookOption();
             Console.Write("Your Entry : ");
-            int key = Convert.ToInt32(Console.ReadLine());
+            //key to takes user input
+            int key;
+            //Tries to convert to int
+            try
+            {
+                key = Convert.ToInt32(Console.ReadLine());
+            }
+            //If input is not int then given default(0) value to key
+            catch
+            {
+                key = default(int);
+            }
             //For Storing Saved Data in CSV File to Contact List
             ActionWithGivenKey(key, addressBookObj);
         }
@@ -36,7 +48,7 @@ namespace AddressBookSystem
                 "Enter 8 : Sort all contacts by State\n" +
                 "Enter 9 : Sort all contacts by Zip\n" +
                 "Enter 10 : View all Contacts in this Address Book\n" +
-                "Enter 11 : View all Contacts\n"+
+                "Enter 11 : View all Saved Contacts\n" +
                 "Enter 12 : Save Address Book\n" +
                 "Enter 13 : Exit");
         }
@@ -46,20 +58,17 @@ namespace AddressBookSystem
             {
                 //For Adding new Contact
                 case 1:
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AddContacts(addressBookObj.AddressBookName);
+                    Contacts.AddContacts(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
                 //For Editing the Contacts
                 case 2:
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName].EditContact(addressBookObj.AddressBookName);
+                    Contacts.EditContact(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
                 //For Deleting Contacts
                 case 3:
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName].DeleteContact(addressBookObj.AddressBookName);
+                    Contacts.DeleteContact(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
                 //For opening new/saved address book
@@ -73,44 +82,31 @@ namespace AddressBookSystem
                     break;
                 //Sort by Name
                 case 6:
-                    Contacts.SortByName();
-                    Console.WriteLine("-----------------------------------------");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Sort by Name Selected");
-                    Console.ResetColor();
+                    Contacts.sortType=SortingType.SORT_BY_NAME;
+                    Contacts.PrintInRed($"Sort by Name Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by City
                 case 7:
-                    Contacts.SortByCity();
-                    Console.WriteLine("-----------------------------------------");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Sort by City Selected");
-                    Console.ResetColor();
+                    Contacts.sortType=SortingType.SORT_BY_CITY;
+                    Contacts.PrintInRed($"Sort by City Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by State
                 case 8:
-                    Contacts.SortByState();
-                    Console.WriteLine("-----------------------------------------");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Sort by State Selected");
-                    Console.ResetColor();
+                    Contacts.sortType=SortingType.SORT_BY_STATE;
+                    Contacts.PrintInRed($"Sort by State Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by Zip
                 case 9:
-                    Contacts.SortByZip();
-                    Console.WriteLine("-----------------------------------------");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Sort by Zip Selected");
-                    Console.ResetColor();
+                    Contacts.sortType=SortingType.SORT_BY_ZIP;
+                    Contacts.PrintInRed($"Sort by Zip Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //View All Contacts
                 case 10:
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
-                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AllContacts(addressBookObj.AddressBookName);
+                    Contacts.AllContacts(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
                 //Read JSON File
@@ -127,7 +123,7 @@ namespace AddressBookSystem
                 case 13:
                     break;
                 default:
-                    Console.WriteLine("Try Again. Wrong key");
+                    Contacts.PrintInMagenta("Try Again. Wrong key");
                     WorkAddressBook(addressBookObj);
                     break;
             }

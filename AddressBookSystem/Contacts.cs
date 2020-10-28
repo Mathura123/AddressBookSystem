@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-
-namespace AddressBookSystem
+﻿namespace AddressBookSystem
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+
     public class Contacts
     {
         public static List<Contacts> listContacts = new List<Contacts>();
-        private static SortingType sortType;
+        public static SortingType sortType = SortingType.DEFAULT_SORTING;
         public string AddressBookName { get; set; }
         //First Name is Required and should be of atleast 3 characters
         [Required(ErrorMessage = "{0} is Required")]
@@ -45,28 +45,24 @@ namespace AddressBookSystem
             PhoneNo = personDetail[7];
             Email = personDetail[8];
         }
-        public void AddContacts(string addressBookName)
+        public static void AddContacts(string addressBookName)
         {
             //Creates new Contact object by getting personDeatils from AskDetailsForAdding
             Contacts objContacts = new Contacts(AskDetailsForAdding(addressBookName));
             //Adds objContact to listContacts if objContacts is valid 
-            if (AddressBookDetailsValidation.ValidatePersonDetails(objContacts))
+            if (AddressBookDetailsValidation.Validate(objContacts))
             {
                 listContacts.Add(objContacts);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Contact has been Added to " + addressBookName);
-                Console.ResetColor();
+                PrintInRed($"Contact has been Added to {addressBookName}",false);
             }
             //Given Error if objContacts is invalid 
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Contact has not been Added");
-                Console.ResetColor();
+                PrintInMagenta($"Contact has not been Added to",false);
                 AddContacts(addressBookName);
             }
         }
-        public void EditContact(string addressBookName)
+        public static void EditContact(string addressBookName)
         {
             //gets First Name And Second Name from User using 
             string[] name = AskDetailForDeletingOrEditing(addressBookName, "Edit");
@@ -90,7 +86,7 @@ namespace AddressBookSystem
                 {
                     Console.Write("New Phone Number : ");
                     item.PhoneNo = Console.ReadLine();
-                    if (AddressBookDetailsValidation.ValidatePersonDetails(item))
+                    if (AddressBookDetailsValidation.Validate(item))
                         break;
                 }
                 //For having Valid Email
@@ -98,23 +94,16 @@ namespace AddressBookSystem
                 {
                     Console.Write("New Email : ");
                     item.Email = Console.ReadLine();
-                    if (AddressBookDetailsValidation.ValidatePersonDetails(item))
+                    if (AddressBookDetailsValidation.Validate(item))
                         break;
                 }
                 personFound = true;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Details have been updated in " + addressBookName);
-                Console.ResetColor();
+                PrintInRed("Details have been updated in " + addressBookName, false);
             }
             if (personFound == false)
-            {
-
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine("Person not found");
-                Console.ResetColor();
-            }
+                PrintInMagenta("Person not found");
         }
-        public void DeleteContact(string addressBookName)
+        public static void DeleteContact(string addressBookName)
         {
             //gets First Name And Second Name from User using 
             string[] name = AskDetailForDeletingOrEditing(addressBookName, "Delete");
@@ -128,29 +117,20 @@ namespace AddressBookSystem
             {
                 personToDelete = item;
                 personFound = true;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Person has been Removed from Contacts in " + addressBookName);
-                Console.ResetColor();
+                PrintInRed("Person removed from Contacts in " + addressBookName, false);
                 break;
             }
             //Removes the Contacts if person found
             listContacts.Remove(personToDelete);
             //Gives error if person not found
             if (personFound == false)
-            {
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine("Person not found");
-                Console.ResetColor();
-            }
+                PrintInMagenta("Person not found", false);
         }
-        public void AllContacts(string addressBookName)
+        public static void AllContacts(string addressBookName)
         {
-            //Sorts listContacts According to the Sorting Method choosed by user. If no method choose then sorts by name
+            //For Sorting Accoring to sorting type choosed
             SortOnConditionChooses();
-            Console.WriteLine("-----------------------------------------");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("All Contacts");
-            Console.ResetColor();
+            PrintInRed("All Contacts");
             foreach (Contacts item in listContacts)
             {
                 if (item.AddressBookName == addressBookName)
@@ -161,7 +141,7 @@ namespace AddressBookSystem
         }
         public static void SearchPersonByCityOrState()
         {
-            //Sorts listContacts According to the Sorting Method choosed by user. If no method choose then sorts by name
+            //For Sorting Accoring to sorting type choosed
             SortOnConditionChooses();
             //For counting no of people in same city/state
             int slNo = 0;
@@ -169,20 +149,14 @@ namespace AddressBookSystem
             string city = Console.ReadLine();
             Console.Write("Enter State : ");
             string state = Console.ReadLine();
-            Console.WriteLine("-----------------------------------------");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Search by City " + city + " are :");
-            Console.ResetColor();
+            PrintInRed("Search by City " + city + " are :\n");
             foreach (Contacts personDetails in listContacts.Where(x => (x.City.Equals(city) && x.State.Equals(state))))
             {
                 Console.WriteLine(personDetails);
                 slNo++;
             }
             Console.WriteLine("\nCount by City is : " + slNo);
-            Console.WriteLine("-----------------------------------------");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Search by State " + state + " are :");
-            Console.ResetColor();
+            PrintInRed("Search by State " + state + " are :\n");
             slNo = 0;
             foreach (Contacts personDetails in listContacts)
             {
@@ -250,11 +224,11 @@ namespace AddressBookSystem
         {
             if (sortType == SortingType.SORT_BY_ZIP)
                 SortByZip();
-            else if (sortType == SortingType.SORT_BY_CITY)
+            if (sortType == SortingType.SORT_BY_CITY)
                 SortByCity();
-            else if (sortType == SortingType.SORT_BY_STATE)
+            if (sortType == SortingType.SORT_BY_STATE)
                 SortByState();
-            else
+            if(sortType == SortingType.SORT_BY_NAME)
                 SortByName();
         }
         private static string[] AskDetailsForAdding(string addressBookName)
@@ -262,20 +236,14 @@ namespace AddressBookSystem
         label2:
             string[] personDetail = new string[9];
             personDetail[0] = addressBookName;
-            Console.WriteLine("-----------------------------------------");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Address Book Name : {addressBookName}");
-            Console.ResetColor();
+            PrintInRed($"Address Book Name : {addressBookName}", true);
             Console.Write("First Name : ");
             personDetail[1] = Console.ReadLine();
             Console.Write("Second Name : ");
             personDetail[2] = Console.ReadLine();
             if (SearchDublicates(personDetail[1], personDetail[2], addressBookName))
             {
-                Console.WriteLine("-----------------------------------------");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine("This Person is already in " + addressBookName + " Address Book\nTry to add another");
-                Console.ResetColor();
+                PrintInMagenta("This Person is already in " + addressBookName + " Address Book\nTry to add another", true);
                 goto label2;
             }
             Console.Write("Address : ");
@@ -295,18 +263,37 @@ namespace AddressBookSystem
         private static string[] AskDetailForDeletingOrEditing(string addressBookName, string func)
         {
             string[] name = new string[2];
-            Console.WriteLine("-----------------------------------------");
-            Console.ForegroundColor = ConsoleColor.Red;
             if (func == "Delete")
-                Console.WriteLine($"Delete Contact in {addressBookName}");
+                PrintInRed($"Delete Contact in {addressBookName}");
             else
-                Console.WriteLine($"Edit Contact in {addressBookName}");
-            Console.ResetColor();
+                PrintInMagenta($"Edit Contact in {addressBookName}");
             Console.Write("First Name : ");
             name[0] = Console.ReadLine();
             Console.Write("Second Name : ");
             name[1] = Console.ReadLine();
             return name;
+        }
+        //For printing headers and results in red
+        public static void PrintInRed(string s, bool header = true, bool footer = false)
+        {
+            if (header)
+                Console.WriteLine("-----------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(s);
+            Console.ResetColor();
+            if (footer)
+                Console.WriteLine("-----------------------------------------");
+        }
+        //For printing Errors in Magenta
+        public static void PrintInMagenta(string s, bool header = true, bool footer = false)
+        {
+            if (header)
+                Console.WriteLine("-----------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(s);
+            Console.ResetColor();
+            if (footer)
+                Console.WriteLine("-----------------------------------------");
         }
     }
     //Enum that for saving sorting type
@@ -315,6 +302,7 @@ namespace AddressBookSystem
         SORT_BY_NAME,
         SORT_BY_CITY,
         SORT_BY_STATE,
-        SORT_BY_ZIP
+        SORT_BY_ZIP,
+        DEFAULT_SORTING
     }
 }
