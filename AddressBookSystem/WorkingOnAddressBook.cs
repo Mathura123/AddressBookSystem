@@ -78,8 +78,12 @@ namespace AddressBookSystem
                 "Enter 1 : Add Contact\nEnter 2 : Edit Contact\nEnter 3 : Delete Person From Contact\n" +
                 "Enter 4 : Create new Address Book or to Work on saved Address Book\n" +
                 "Enter 5 : Search Person by City or State\n" +
-                "Enter 6 : show all contacts\n" +
-                "Enter 7 : Exit");
+                "Enter 6 : Sort all contacts by Name\n" +
+                "Enter 7 : Sort all contacts by City\n" +
+                "Enter 8 : Sort all contacts by State\n" +
+                "Enter 9 : Sort all contacts by Zip\n" +
+                "Enter 10 : View all Contacts\n" +
+                "Enter 11 : Exit");
             Console.Write("Your Entry : ");
             int key = Convert.ToInt32(Console.ReadLine());
             switch (key)
@@ -121,6 +125,38 @@ namespace AddressBookSystem
                     WorkAddressBook(addressBookObj);
                     break;
                 case 6:
+                    Contacts.SortByName(); 
+                    Console.WriteLine("-----------------------------------------");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Sort by Name Selected");
+                    Console.ResetColor();
+                    WorkAddressBook(addressBookObj);
+                    break;
+                case 7:
+                    Contacts.SortByCity();
+                    Console.WriteLine("-----------------------------------------");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Sort by City Selected");
+                    Console.ResetColor();
+                    WorkAddressBook(addressBookObj);
+                    break;
+                case 8:
+                    Contacts.SortByState();
+                    Console.WriteLine("-----------------------------------------");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Sort by State Selected");
+                    Console.ResetColor();
+                    WorkAddressBook(addressBookObj);
+                    break;
+                case 9:
+                    Contacts.SortByZip();
+                    Console.WriteLine("-----------------------------------------");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Sort by Zip Selected");
+                    Console.ResetColor();
+                    WorkAddressBook(addressBookObj);
+                    break;
+                case 10:
                     try
                     {
                         AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AllContacts(addressBookObj.AddressBookName);
@@ -132,7 +168,7 @@ namespace AddressBookSystem
                         WorkAddressBook(addressBookObj);
                     }
                     break;
-                case 7:
+                case 11:
                     break;
                 default:
                     Console.WriteLine("Try Again. Wrong key");

@@ -8,8 +8,7 @@ namespace AddressBookSystem
     public class Contacts
     {
         private static List<Contacts> listContacts = new List<Contacts>();
-        //public static Dictionary<string, Contacts> cityPersonDict = new Dictionary<string, Contacts>();
-        //private static Dictionary<string, Contacts> statePersonDict = new Dictionary<string, Contacts>();
+        private static SortingType sortType;
         public string AddressBookName { get; set; }
         [Required(ErrorMessage = "{0} is Required")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "{0} must be of atleast of 3 characters")]
@@ -172,8 +171,9 @@ namespace AddressBookSystem
         }
         public void AllContacts(string addressBookName)
         {
-            Contacts.Sort();
+            SortOnConditionChooses();
             Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("-----------------------------------------");
             Console.WriteLine("All Contacts");
             Console.ResetColor();
             foreach (Contacts item in listContacts)
@@ -186,12 +186,13 @@ namespace AddressBookSystem
         }
         public static void SearchPersonByCityOrState()
         {
-            Contacts.Sort();
+            SortOnConditionChooses();
             int slNo = 0;
             Console.Write("Enter City : ");
             string city = Console.ReadLine();
             Console.Write("Enter State : ");
             string state = Console.ReadLine();
+            Console.WriteLine("-----------------------------------------");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Search by City " + city + " are :");
             Console.ResetColor();
@@ -203,7 +204,8 @@ namespace AddressBookSystem
                     slNo++;
                 }
             }
-            Console.WriteLine("\nCount by City is : " + slNo + "\n");
+            Console.WriteLine("\nCount by City is : " + slNo);
+            Console.WriteLine("-----------------------------------------");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Search by State " + state + " are :");
             Console.ResetColor();
@@ -216,7 +218,7 @@ namespace AddressBookSystem
                     slNo++;
                 }
             }
-            Console.WriteLine("\nCount by State is : " + slNo + "\n");
+            Console.WriteLine("\nCount by State is : " + slNo);
         }
         private bool SearchDublicates(string firstName, string lastName, string addressBookName)
         {
@@ -227,21 +229,77 @@ namespace AddressBookSystem
             else
                 return false;
         }
-        private static void Sort()
-        {
-            listContacts.Sort(delegate (Contacts x, Contacts y)
-            {
-                if (x.FirstName.CompareTo(y.FirstName) == 0)
-                    return x.LastName.CompareTo(y.LastName);
-                else
-                return x.FirstName.CompareTo(y.FirstName);
-            });
-        }
         public override string ToString()
         {
             return($"AddressBookName : {AddressBookName} ,Name : {FirstName} {LastName} ,Address : {Address} ,City {City} ," +
                 $"State : {State} ,Zip : {Zip} ," +
                 $"PhoneNo : {PhoneNo} ,Email : {Email}");
         }
+        public static void SortByName()
+        {
+            
+            sortType = SortingType.SORT_BY_NAME;
+            listContacts.Sort(delegate (Contacts x, Contacts y)
+            {
+                if (x.FirstName.CompareTo(y.FirstName) == 0)
+                    return x.LastName.CompareTo(y.LastName);
+                else
+                    return x.FirstName.CompareTo(y.FirstName);
+            });
+        }
+        public static void SortByCity()
+        {
+            Console.WriteLine("-----------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Sorted Contacts by City");
+            Console.ResetColor();
+            sortType = SortingType.SORT_BY_CITY;
+            listContacts.Sort(delegate (Contacts x, Contacts y)
+            {
+                    return x.City.CompareTo(y.City);
+            });
+        }
+        public static void SortByState()
+        {
+            Console.WriteLine("-----------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Sorted Contacts by State");
+            Console.ResetColor();
+            sortType = SortingType.SORT_BY_STATE;
+            listContacts.Sort(delegate (Contacts x, Contacts y)
+            {
+                return x.State.CompareTo(y.State);
+            });
+        }
+        public static void SortByZip()
+        {
+            Console.WriteLine("-----------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Sorted Contacts by Zip");
+            Console.ResetColor();
+            sortType = SortingType.SORT_BY_ZIP;
+            listContacts.Sort(delegate (Contacts x, Contacts y)
+            {
+                return x.Zip.CompareTo(y.Zip);
+            });
+        }
+        private static void SortOnConditionChooses()
+        {
+            if (sortType == SortingType.SORT_BY_ZIP)
+                SortByZip();
+            else if (sortType == SortingType.SORT_BY_CITY)
+                SortByCity();
+            else if (sortType == SortingType.SORT_BY_STATE)
+                SortByState();
+            else
+                SortByName();
+        }
+    }
+    public enum SortingType
+    {
+        SORT_BY_NAME,
+        SORT_BY_CITY,
+        SORT_BY_STATE,
+        SORT_BY_ZIP
     }
 }
