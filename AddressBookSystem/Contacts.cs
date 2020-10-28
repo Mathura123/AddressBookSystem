@@ -54,7 +54,10 @@ namespace AddressBookSystem
             string sName = Console.ReadLine();
             if (SearchDublicates(fName, sName, addressBookName))
             {
-                Console.WriteLine("\nThis Person is already in " + addressBookName + " Address Book\nTry to add another\n--------------");
+                Console.WriteLine("-----------------------------------------");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("This Person is already in " + addressBookName + " Address Book\nTry to add another");
+                Console.ResetColor();
                 goto label2;
             }
             Console.Write("Address : ");
@@ -67,7 +70,7 @@ namespace AddressBookSystem
             string personZip = Console.ReadLine();
             Console.Write("Phone Number : ");
             string phoneNumber = Console.ReadLine();
-            
+
             Console.Write("Email Id : ");
             string personEmail = Console.ReadLine();
             Contacts objContacts = new Contacts(addressBookName, fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
@@ -231,13 +234,12 @@ namespace AddressBookSystem
         }
         public override string ToString()
         {
-            return($"AddressBookName : {AddressBookName} ,Name : {FirstName} {LastName} ,Address : {Address} ,City {City} ," +
+            return ($"AddressBookName : {AddressBookName} ,Name : {FirstName} {LastName} ,Address : {Address} ,City {City} ," +
                 $"State : {State} ,Zip : {Zip} ," +
                 $"PhoneNo : {PhoneNo} ,Email : {Email}");
         }
         public static void SortByName()
         {
-            
             sortType = SortingType.SORT_BY_NAME;
             listContacts.Sort(delegate (Contacts x, Contacts y)
             {
@@ -249,22 +251,14 @@ namespace AddressBookSystem
         }
         public static void SortByCity()
         {
-            Console.WriteLine("-----------------------------------------");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Sorted Contacts by City");
-            Console.ResetColor();
             sortType = SortingType.SORT_BY_CITY;
             listContacts.Sort(delegate (Contacts x, Contacts y)
             {
-                    return x.City.CompareTo(y.City);
+                return x.City.CompareTo(y.City);
             });
         }
         public static void SortByState()
         {
-            Console.WriteLine("-----------------------------------------");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Sorted Contacts by State");
-            Console.ResetColor();
             sortType = SortingType.SORT_BY_STATE;
             listContacts.Sort(delegate (Contacts x, Contacts y)
             {
@@ -273,10 +267,6 @@ namespace AddressBookSystem
         }
         public static void SortByZip()
         {
-            Console.WriteLine("-----------------------------------------");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Sorted Contacts by Zip");
-            Console.ResetColor();
             sortType = SortingType.SORT_BY_ZIP;
             listContacts.Sort(delegate (Contacts x, Contacts y)
             {

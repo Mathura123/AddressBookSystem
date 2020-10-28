@@ -12,64 +12,11 @@ namespace AddressBookSystem
         public string AddressBookName { get; set; }
         public static void AddressBook()
         {
+            Console.WriteLine("===============================");
             Console.Write("Enter the new/saved Address Book Name : ");
             WorkingOnAddressBook addressBookObj = new WorkingOnAddressBook();
             addressBookObj.AddressBookName = Console.ReadLine();
             AddressBookDetailsValidation.ValidateAddressBookName(addressBookObj);
-            //Label1:
-            //Console.WriteLine("\nEnter 1 to Add Contact\nEnter 2 to Edit Contact\nEnter 3 to Delete Person From Contact\nEnter 4 to Create new Address Book or to Work on saved Address Book\nEnter 5 to Search Person by City or State\nEnter 6 to show all contacts\nEnter 7 to Exit");
-            //int key = Convert.ToInt32(Console.ReadLine());
-            //switch (key)
-            //{
-            //    case 1:
-            //        AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
-            //        AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AddContacts(addressBookObj.AddressBookName);
-            //        goto Label1;
-            //    case 2:
-            //        try
-            //        {
-            //            AddressBookMain.addressBookDict[addressBookObj.AddressBookName].EditContact(addressBookObj.AddressBookName);
-            //        }
-            //        catch
-            //        {
-            //            Console.WriteLine("\nAddress Book has no Contacts yet\nFirstly Add Contacts\n");
-            //            goto Label1;
-            //        }
-            //        goto Label1;
-            //    case 3:
-            //        try
-            //        {
-            //        AddressBookMain.addressBookDict[addressBookObj.AddressBookName].DeleteContact(addressBookObj.AddressBookName);
-            //        }
-            //        catch
-            //        {
-            //            Console.WriteLine("\nAddress Book has no Contacts yet\nFirstly Add Contacts\n");
-            //            goto Label1;
-            //        }
-            //        goto Label1;
-            //    case 4:
-            //        AddressBook();
-            //        break;
-            //    case 5:
-            //            Contacts.SearchPersonByCityOrState();
-            //        goto Label1;
-            //    case 6:
-            //        try
-            //        {
-            //            AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AllContacts(addressBookObj.AddressBookName);
-            //        }
-            //        catch
-            //        {
-            //            Console.WriteLine("\nAddress Book has no Contacts yet\nFirstly Add Contacts\n");
-            //            goto Label1;
-            //        }
-            //        goto Label1;
-            //    case 7:
-            //        break;
-            //    default:
-            //        Console.WriteLine("Try Again. Wrong key");
-            //        goto Label1;
-            //}
             WorkAddressBook(addressBookObj);
         }
         public static void WorkAddressBook(WorkingOnAddressBook addressBookObj)
@@ -88,6 +35,7 @@ namespace AddressBookSystem
                 "Enter 13 : Exit");
             Console.Write("Your Entry : ");
             int key = Convert.ToInt32(Console.ReadLine());
+            AddressBookFileIO.StoreAddressBookDetailsInContactsList();
             switch (key)
             {
                 case 1:
@@ -96,28 +44,14 @@ namespace AddressBookSystem
                     WorkAddressBook(addressBookObj);
                     break;
                 case 2:
-                    try
-                    {
-                        AddressBookMain.addressBookDict[addressBookObj.AddressBookName].EditContact(addressBookObj.AddressBookName);
-                        WorkAddressBook(addressBookObj);
-                    }
-                    catch
-                    {
-                        Console.WriteLine("\nAddress Book has no Contacts yet\nFirstly Add Contacts\n");
-                        WorkAddressBook(addressBookObj);
-                    }
+                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
+                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName].EditContact(addressBookObj.AddressBookName);
+                    WorkAddressBook(addressBookObj);
                     break;
                 case 3:
-                    try
-                    {
-                        AddressBookMain.addressBookDict[addressBookObj.AddressBookName].DeleteContact(addressBookObj.AddressBookName);
-                        WorkAddressBook(addressBookObj);
-                    }
-                    catch
-                    {
-                        Console.WriteLine("\nAddress Book has no Contacts yet\nFirstly Add Contacts\n");
-                        WorkAddressBook(addressBookObj);
-                    }
+                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
+                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName].DeleteContact(addressBookObj.AddressBookName);
+                    WorkAddressBook(addressBookObj);
                     break;
                 case 4:
                     AddressBook();
@@ -159,23 +93,16 @@ namespace AddressBookSystem
                     WorkAddressBook(addressBookObj);
                     break;
                 case 10:
-                    try
-                    {
-                        AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AllContacts(addressBookObj.AddressBookName);
-                        WorkAddressBook(addressBookObj);
-                    }
-                    catch
-                    {
-                        Console.WriteLine("\nAddress Book has no Contacts yet\nFirstly Add Contacts\n");
-                        WorkAddressBook(addressBookObj);
-                    }
+                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName] = new Contacts();
+                    AddressBookMain.addressBookDict[addressBookObj.AddressBookName].AllContacts(addressBookObj.AddressBookName);
+                    WorkAddressBook(addressBookObj);
                     break;
                 case 11:
-                    AddressBookFileIO.WriteIntoAddressBook();
+                    AddressBookFileIO.WriteAddressBookCSV();
                     AddressBook();
                     break;
                 case 12:
-                    AddressBookFileIO.ReadAddressBook();
+                    AddressBookFileIO.ReadAddressBookCSV();
                     AddressBook();
                     break;
                 case 13:

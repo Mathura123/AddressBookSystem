@@ -9,8 +9,9 @@ namespace AddressBookSystem
 
         public static void Main()
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Welcome to Address Book Program");
-            Console.WriteLine("===============================");
+            Console.ResetColor();
             WorkingOnAddressBook.AddressBook();
         }
     }
