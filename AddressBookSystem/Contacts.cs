@@ -16,7 +16,7 @@
         public string FirstName { get; set; }
         //Second Name is Required and should be of atleast 3 characters
         [Required(ErrorMessage = "{0} is Required")]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "{0} must be of atleast of 3 characters")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "{3} must be of atleast of 3 characters")]
         public string LastName { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
@@ -131,6 +131,9 @@
             //For Sorting Accoring to sorting type choosed
             SortOnConditionChooses();
             PrintInRed("All Contacts");
+            PrintDashLine(150);
+            Console.WriteLine(PrintRow(150, "AddressBookName", "Name", "Address", "City", "State", "PhoneNo", "Email"));
+            PrintDashLine(150);
             foreach (Contacts item in listContacts)
             {
                 if (item.AddressBookName == addressBookName)
@@ -138,6 +141,7 @@
                     Console.WriteLine(item);
                 }
             }
+            PrintDashLine(150);
         }
         public static void SearchPersonByCityOrState()
         {
@@ -150,13 +154,20 @@
             Console.Write("Enter State : ");
             string state = Console.ReadLine();
             PrintInRed("Search by City " + city + " are :\n");
+            PrintDashLine(150);
+            Console.WriteLine(PrintRow(150, "AddressBookName", "Name", "Address", "City", "State", "PhoneNo", "Email"));
+            PrintDashLine(150);
             foreach (Contacts personDetails in listContacts.Where(x => (x.City.ToLower().Equals(city.ToLower()) && x.State.ToLower().Equals(state.ToLower()))))
             {
                 Console.WriteLine(personDetails);
                 slNo++;
             }
+            PrintDashLine(150);
             Console.WriteLine("\nCount by City is : " + slNo);
             PrintInRed("Search by State " + state + " are :\n");
+            PrintDashLine(150);
+            Console.WriteLine(PrintRow(150, "AddressBookName", "Name", "Address", "City", "State", "PhoneNo", "Email"));
+            PrintDashLine(150);
             slNo = 0;
             foreach (Contacts personDetails in listContacts)
             {
@@ -166,6 +177,7 @@
                     slNo++;
                 }
             }
+            PrintDashLine(150);
             Console.WriteLine("\nCount by State is : " + slNo);
         }
         //For Searching dublicate person
@@ -181,9 +193,11 @@
         //Overrides ToString Method for object of Contacts Class
         public override string ToString()
         {
-            return ($"AddressBookName : {AddressBookName} ,Name : {FirstName} {LastName} ,Address : {Address} ,City : {City} ," +
-                $"State : {State} ,Zip : {Zip} ," +
-                $"PhoneNo : {PhoneNo} ,Email : {Email}");
+            string name = FirstName + " " + LastName;
+            return PrintRow(150, AddressBookName, name, Address, City, State, PhoneNo, Email);
+            //return ($"AddressBookName : {AddressBookName} ,Name : {FirstName} {LastName} ,Address : {Address} ,City : {City} ," +
+            //    $"State : {State} ,Zip : {Zip} ," +
+            //    $"PhoneNo : {PhoneNo} ,Email : {Email}");
         }
         public static void SortByName()
         {
@@ -269,6 +283,35 @@
             Console.Write("Second Name : ");
             name[1] = Console.ReadLine();
             return name;
+        }
+        public static void PrintDashLine(int tableWidth)
+        {
+            Console.WriteLine(new string('-', tableWidth));
+        }
+        public static string PrintRow(int tableWidth, params string[] columns)
+        {
+            int width = (tableWidth - columns.Length) / columns.Length;
+            string row = "|";
+
+            foreach (string column in columns)
+            {
+                row += AlignCentre(column, width) + "|";
+            }
+
+            return row;
+        }
+        public static string AlignCentre(string text, int width)
+        {
+            text = text.Length > width ? text.Substring(0, width - 3) + "..." : text;
+
+            if (string.IsNullOrEmpty(text))
+            {
+                return new string(' ', width);
+            }
+            else
+            {
+                return text.PadRight(width - (width - text.Length) / 2).PadLeft(width);
+            }
         }
         //For printing headers and results in red
         public static void PrintInRed(string s, bool header = true, bool footer = false)

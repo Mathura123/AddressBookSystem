@@ -77,10 +77,14 @@
 
             IList<Contacts> addressDatas = JsonConvert.DeserializeObject<IList<Contacts>>(File.ReadAllText(path));
             Contacts.PrintInRed("Read Data Successfully from address book JSON");
+            Contacts.PrintDashLine(150);
+            Console.WriteLine(Contacts.PrintRow(150, "AddressBookName", "Name", "Address", "City","State", "PhoneNo", "Email"));
+            Contacts.PrintDashLine(150);
             foreach (Contacts personDetail in addressDatas)
             {
                 Console.WriteLine(personDetail);
             }
+            Contacts.PrintDashLine(150);
             WriteAddressBookCSV();
         }
         //Write in JSON File
