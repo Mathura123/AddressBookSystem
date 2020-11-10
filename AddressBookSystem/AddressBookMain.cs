@@ -4,7 +4,7 @@
 
     class AddressBookMain
     {
-        public static Dictionary<string, Contacts> addressBookDict = new Dictionary<string, Contacts>();
+        public static Dictionary<string, AddressBookModel> addressBookDict = new Dictionary<string, AddressBookModel>();
         public static void Main()
         {
             CustomPrint.PrintInRed("*****Welcome to Address Book Program*****", false);

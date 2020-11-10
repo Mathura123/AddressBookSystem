@@ -9,7 +9,7 @@ namespace AddressBookSystem
         private static int tableWidth = 147;
         public static void PrintDashLine()
         {
-            Console.WriteLine(new string('-', tableWidth + 4).PadLeft(tableWidth + 5, '+').PadRight(tableWidth + 6, '+'));
+            Console.WriteLine(new string('~', tableWidth + 4).PadLeft(tableWidth + 5, '+').PadRight(tableWidth + 6, '+'));
         }
         public static string PrintRow(params string[] columns)
         {

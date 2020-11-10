@@ -7,47 +7,26 @@
 
     public class Contacts
     {
-        public static List<Contacts> listContacts = new List<Contacts>();
-        public string AddressBookName { get; set; }
-        //First Name is Required and should be of atleast 3 characters
-        [Required(ErrorMessage = "{0} is Required")]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "{0} must be of atleast of 3 characters")]
-        public string FirstName { get; set; }
-        //Second Name is Required and should be of atleast 3 characters
-        [Required(ErrorMessage = "{0} is Required")]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "{3} must be of atleast of 3 characters")]
-        public string LastName { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Zip { get; set; }
-        //For Validating Phone No
-        [Phone]
-        [DataType(DataType.PhoneNumber)]
-        public string PhoneNo { get; set; }
-        //for Validating Email
-        [EmailAddress]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-        public Contacts()
-        {
-        }
-        public Contacts(string[] personDetail)
-        {
-            AddressBookName = personDetail[0];
-            FirstName = personDetail[1];
-            LastName = personDetail[2];
-            Address = personDetail[3];
-            City = personDetail[4];
-            State = personDetail[5];
-            Zip = personDetail[6];
-            PhoneNo = personDetail[7];
-            Email = personDetail[8];
-        }
+        public static List<AddressBookModel> listContacts = new List<AddressBookModel>();
+        //public Contacts()
+        //{
+        //}
+        //public Contacts(string[] personDetail)
+        //{
+        //    AddressBookName = personDetail[0];
+        //    FirstName = personDetail[1];
+        //    LastName = personDetail[2];
+        //    Address = personDetail[3];
+        //    City = personDetail[4];
+        //    State = personDetail[5];
+        //    Zip = personDetail[6];
+        //    PhoneNo = personDetail[7];
+        //    Email = personDetail[8];
+        //}
         public static void AddContacts(string addressBookName)
         {
             //Creates new Contact object by getting personDeatils from AskDetailsForAdding
-            Contacts objContacts = new Contacts(AskDetailsForAdding(addressBookName));
+            AddressBookModel objContacts = new AddressBookModel(AskDetailsForAdding(addressBookName));
             //Adds objContact to listContacts if objContacts is valid 
             if (AddressBookDetailsValidation.Validate(objContacts))
             {
@@ -69,8 +48,8 @@
             string sName = name[1];
             bool personFound = false;
             //loops through contacts where First Name,Second Name and AddressBookName get matched
-            Func<Contacts, bool> condition = item => ((item.FirstName).ToLower() == fName.ToLower() && (item.LastName).ToLower() == sName.ToLower() && item.AddressBookName == addressBookName);
-            foreach (Contacts item in listContacts.Where(condition))
+            Func<AddressBookModel, bool> condition = item => ((item.FirstName).ToLower() == fName.ToLower() && (item.LastName).ToLower() == sName.ToLower() && item.AddressBookName == addressBookName);
+            foreach (AddressBookModel item in listContacts.Where(condition))
             {
                 Console.Write("New Address : ");
                 item.Address = Console.ReadLine();
@@ -109,10 +88,10 @@
             string fName = name[0];
             string sName = name[1];
             bool personFound = false;
-            Contacts personToDelete = new Contacts();
+            AddressBookModel personToDelete = new AddressBookModel();
             //loops through contacts where First Name,Second Name and AddressBookName get matched
-            Func<Contacts, bool> condition = item => ((item.FirstName).ToLower() == fName.ToLower() && (item.LastName).ToLower() == sName.ToLower() && item.AddressBookName == addressBookName);
-            foreach (Contacts item in listContacts.Where(condition))
+            Func<AddressBookModel, bool> condition = item => ((item.FirstName).ToLower() == fName.ToLower() && (item.LastName).ToLower() == sName.ToLower() && item.AddressBookName == addressBookName);
+            foreach (AddressBookModel item in listContacts.Where(condition))
             {
                 personToDelete = item;
                 personFound = true;
@@ -133,7 +112,7 @@
             CustomPrint.PrintDashLine();
             Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email"));
             CustomPrint.PrintDashLine();
-            foreach (Contacts item in listContacts)
+            foreach (AddressBookModel item in listContacts)
             {
                 if (item.AddressBookName == addressBookName)
                 {
@@ -156,7 +135,7 @@
             CustomPrint.PrintDashLine();
             Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email"));
             CustomPrint.PrintDashLine();
-            foreach (Contacts personDetails in listContacts.Where(x => (x.City.ToLower().Equals(city.ToLower()) && x.State.ToLower().Equals(state.ToLower()))))
+            foreach (AddressBookModel personDetails in listContacts.Where(x => (x.City.ToLower().Equals(city.ToLower()) && x.State.ToLower().Equals(state.ToLower()))))
             {
                 Console.WriteLine(personDetails);
                 slNo++;
@@ -165,10 +144,10 @@
             Console.WriteLine("\nCount by City is : " + slNo);
             CustomPrint.PrintInRed("Search by State " + state + " are :\n");
             CustomPrint.PrintDashLine();
-            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "PhoneNo", "Email"));
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email"));
             CustomPrint.PrintDashLine();
             slNo = 0;
-            foreach (Contacts personDetails in listContacts)
+            foreach (AddressBookModel personDetails in listContacts)
             {
                 if (personDetails.State.Equals(state))
                 {
@@ -190,11 +169,7 @@
                 return false;
         }
         //Overrides ToString Method for object of Contacts Class
-        public override string ToString()
-        {
-            string name = FirstName + " " + LastName;
-            return CustomPrint.PrintRow(AddressBookName, name, Address, City, State, Zip, PhoneNo, Email);
-        }
+        
         private static string[] AskDetailsForAdding(string addressBookName)
         {
         label2:
@@ -253,47 +228,47 @@
         }
         /// <summary>Sorts contact list by name.</summary>
         /// <param name="listContacts">The list contacts.</param>
-        public static void SortByName(List<Contacts> listContacts)
+        public static void SortByName(List<AddressBookModel> listContacts)
         {
             sortType = SortingType.SORT_BY_NAME;
-            listContacts.Sort(delegate (Contacts x, Contacts y)
+            listContacts.Sort(delegate (AddressBookModel x, AddressBookModel y)
             {
                 return (x.FirstName.ToLower() + x.LastName.ToLower()).CompareTo((y.FirstName.ToLower() + y.LastName.ToLower()));
             });
         }
         /// <summary>Sorts contact list by city.</summary>
         /// <param name="listContacts">The list contacts.</param>
-        public static void SortByCity(List<Contacts> listContacts)
+        public static void SortByCity(List<AddressBookModel> listContacts)
         {
             sortType = SortingType.SORT_BY_CITY;
-            listContacts.Sort(delegate (Contacts x, Contacts y)
+            listContacts.Sort(delegate (AddressBookModel x, AddressBookModel y)
             {
                 return (x.City.ToLower()).CompareTo((y.City.ToLower()));
             });
         }
         /// <summary>Sorts contact list by State.</summary>
         /// <param name="listContacts">The list contacts.</param>
-        public static void SortByState(List<Contacts> listContacts)
+        public static void SortByState(List<AddressBookModel> listContacts)
         {
             sortType = SortingType.SORT_BY_STATE;
-            listContacts.Sort(delegate (Contacts x, Contacts y)
+            listContacts.Sort(delegate (AddressBookModel x, AddressBookModel y)
             {
                 return (x.State.ToLower()).CompareTo((y.State.ToLower()));
             });
         }
         /// <summary>Sorts contact list by zip.</summary>
         /// <param name="listContacts">The list contacts.</param>
-        public static void SortByZip(List<Contacts> listContacts)
+        public static void SortByZip(List<AddressBookModel> listContacts)
         {
             sortType = SortingType.SORT_BY_ZIP;
-            listContacts.Sort(delegate (Contacts x, Contacts y)
+            listContacts.Sort(delegate (AddressBookModel x, AddressBookModel y)
             {
                 return (x.Zip).CompareTo((y.Zip));
             });
         }
         /// <summary>Sorts contact list on condition choosen.</summary>
         /// <param name="listContacts">The list contacts.</param>
-        public static void SortOnConditionChooses(List<Contacts> listContacts)
+        public static void SortOnConditionChooses(List<AddressBookModel> listContacts)
         {
             if (sortType == SortingType.SORT_BY_ZIP)
                 SortByZip(listContacts);

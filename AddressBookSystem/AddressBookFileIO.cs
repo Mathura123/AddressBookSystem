@@ -34,7 +34,7 @@
             using (StreamWriter sr = File.AppendText(path))
             {
                 SortContacts.SortOnConditionChooses(Contacts.listContacts);
-                foreach (Contacts personDetails in Contacts.listContacts)
+                foreach (AddressBookModel personDetails in Contacts.listContacts)
                 {
                     sr.WriteLine(personDetails);
                 }
@@ -50,9 +50,9 @@
             using (var reader = new StreamReader(path))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var records = csv.GetRecords<Contacts>().ToList();
+                var records = csv.GetRecords<AddressBookModel>().ToList();
                 CustomPrint.PrintInRed("Read Data Successfully from address book CSV");
-                foreach (Contacts personDetail in records)
+                foreach (AddressBookModel personDetail in records)
                 {
                     Console.WriteLine(personDetail);
                 }
@@ -75,12 +75,12 @@
         {
             string path = @"F:\MyPrograms\Assignments\A4-AddressBook\AddressBookSystem\AddressBookSystem\Utility\AddressBook.json";
 
-            IList<Contacts> addressDatas = JsonConvert.DeserializeObject<IList<Contacts>>(File.ReadAllText(path));
+            IList<AddressBookModel> addressDatas = JsonConvert.DeserializeObject<IList<AddressBookModel>>(File.ReadAllText(path));
             CustomPrint.PrintInRed("Read Data Successfully from address book JSON");
             CustomPrint.PrintDashLine();
             Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State","Zip","PhoneNo", "Email"));
             CustomPrint.PrintDashLine();
-            foreach (Contacts personDetail in addressDatas)
+            foreach (AddressBookModel personDetail in addressDatas)
             {
                 Console.WriteLine(personDetail);
             }
@@ -108,8 +108,8 @@
             using (var reader = new StreamReader(path))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var records = csv.GetRecords<Contacts>().ToList();
-                foreach (Contacts personDetail in records)
+                var records = csv.GetRecords<AddressBookModel>().ToList();
+                foreach (AddressBookModel personDetail in records)
                 {
                     Contacts.listContacts.Add(personDetail);
                 }
