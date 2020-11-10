@@ -82,25 +82,25 @@
                     break;
                 //Sort by Name
                 case 6:
-                    Contacts.sortType=SortingType.SORT_BY_NAME;
+                    SortContacts.sortType=SortContacts.SortingType.SORT_BY_NAME;
                     CustomPrint.PrintInRed($"Sort by Name Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by City
                 case 7:
-                    Contacts.sortType=SortingType.SORT_BY_CITY;
+                    SortContacts.sortType=SortContacts.SortingType.SORT_BY_CITY;
                     CustomPrint.PrintInRed($"Sort by City Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by State
                 case 8:
-                    Contacts.sortType=SortingType.SORT_BY_STATE;
+                    SortContacts.sortType=SortContacts.SortingType.SORT_BY_STATE;
                     CustomPrint.PrintInRed($"Sort by State Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by Zip
                 case 9:
-                    Contacts.sortType=SortingType.SORT_BY_ZIP;
+                    SortContacts.sortType=SortContacts.SortingType.SORT_BY_ZIP;
                     CustomPrint.PrintInRed($"Sort by Zip Selected");
                     WorkAddressBook(addressBookObj);
                     break;

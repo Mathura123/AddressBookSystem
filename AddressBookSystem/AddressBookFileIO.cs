@@ -17,7 +17,7 @@
 
             using (StreamReader sr = File.OpenText(path))
             {
-                Contacts.PrintInRed($"Saved Address Book Details in TXT file");
+                CustomPrint.PrintInRed($"Saved Address Book Details in TXT file");
                 string s = "";
                 while ((s = sr.ReadLine()) != null)
                 {
@@ -33,7 +33,7 @@
 
             using (StreamWriter sr = File.AppendText(path))
             {
-                Contacts.SortOnConditionChooses();
+                SortContacts.SortOnConditionChooses(Contacts.listContacts);
                 foreach (Contacts personDetails in Contacts.listContacts)
                 {
                     sr.WriteLine(personDetails);
@@ -66,7 +66,7 @@
             using (var writer = new StreamWriter(path, false))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
-                Contacts.SortOnConditionChooses();
+                SortContacts.SortOnConditionChooses(Contacts.listContacts);
                 csv.WriteRecords(Contacts.listContacts);
             }
         }
@@ -77,14 +77,14 @@
 
             IList<Contacts> addressDatas = JsonConvert.DeserializeObject<IList<Contacts>>(File.ReadAllText(path));
             CustomPrint.PrintInRed("Read Data Successfully from address book JSON");
-            CustomPrint.PrintDashLine(150);
-            Console.WriteLine(CustomPrint.PrintRow(150, "AddressBookName", "Name", "Address", "City","State", "PhoneNo", "Email"));
-            CustomPrint.PrintDashLine(150);
+            CustomPrint.PrintDashLine();
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State","Zip","PhoneNo", "Email"));
+            CustomPrint.PrintDashLine();
             foreach (Contacts personDetail in addressDatas)
             {
                 Console.WriteLine(personDetail);
             }
-            CustomPrint.PrintDashLine(150);
+            CustomPrint.PrintDashLine();
             WriteAddressBookCSV();
         }
         //Write in JSON File
@@ -95,7 +95,7 @@
             using (StreamWriter streamWriter = new StreamWriter(path))
             using (JsonWriter writer = new JsonTextWriter(streamWriter))
             {
-                Contacts.SortOnConditionChooses();
+                SortContacts.SortOnConditionChooses(Contacts.listContacts);
                 jsonSerializer.Serialize(writer, Contacts.listContacts);
                 CustomPrint.PrintInRed("Saved Data Successfully to Address Book JSON");
             }

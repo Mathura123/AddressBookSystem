@@ -8,7 +8,6 @@
     public class Contacts
     {
         public static List<Contacts> listContacts = new List<Contacts>();
-        public static SortingType sortType = SortingType.DEFAULT_SORTING;
         public string AddressBookName { get; set; }
         //First Name is Required and should be of atleast 3 characters
         [Required(ErrorMessage = "{0} is Required")]
@@ -53,12 +52,12 @@
             if (AddressBookDetailsValidation.Validate(objContacts))
             {
                 listContacts.Add(objContacts);
-                PrintInRed($"Contact has been Added to {addressBookName}", false);
+                CustomPrint.PrintInRed($"Contact has been Added to {addressBookName}", false);
             }
             //Given Error if objContacts is invalid 
             else
             {
-                PrintInMagenta($"Contact has not been Added to", false);
+                CustomPrint.PrintInMagenta($"Contact has not been Added to", false);
                 AddContacts(addressBookName);
             }
         }
@@ -98,10 +97,10 @@
                         break;
                 }
                 personFound = true;
-                PrintInRed("Details have been updated in " + addressBookName, false);
+                CustomPrint.PrintInRed("Details have been updated in " + addressBookName, false);
             }
             if (personFound == false)
-                PrintInMagenta("Person not found");
+                CustomPrint.PrintInMagenta("Person not found");
         }
         public static void DeleteContact(string addressBookName)
         {
@@ -117,23 +116,23 @@
             {
                 personToDelete = item;
                 personFound = true;
-                PrintInRed("Person removed from Contacts in " + addressBookName, false);
+                CustomPrint.PrintInRed("Person removed from Contacts in " + addressBookName, false);
                 break;
             }
             //Removes the Contacts if person found
             listContacts.Remove(personToDelete);
             //Gives error if person not found
             if (personFound == false)
-                PrintInMagenta("Person not found", false);
+                CustomPrint.PrintInMagenta("Person not found", false);
         }
         public static void AllContacts(string addressBookName)
         {
             //For Sorting Accoring to sorting type choosed
-            SortOnConditionChooses();
-            PrintInRed("All Contacts");
-            PrintDashLine(150);
-            Console.WriteLine(PrintRow(150, "AddressBookName", "Name", "Address", "City", "State", "PhoneNo", "Email"));
-            PrintDashLine(150);
+            SortContacts.SortOnConditionChooses(Contacts.listContacts);
+            CustomPrint.PrintInRed("All Contacts");
+            CustomPrint.PrintDashLine();
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email"));
+            CustomPrint.PrintDashLine();
             foreach (Contacts item in listContacts)
             {
                 if (item.AddressBookName == addressBookName)
@@ -141,33 +140,33 @@
                     Console.WriteLine(item);
                 }
             }
-            PrintDashLine(150);
+            CustomPrint.PrintDashLine();
         }
         public static void SearchPersonByCityOrState()
         {
             //For Sorting Accoring to sorting type choosed
-            SortOnConditionChooses();
+            SortContacts.SortOnConditionChooses(Contacts.listContacts);
             //For counting no of people in same city/state
             int slNo = 0;
             Console.Write("Enter City : ");
             string city = Console.ReadLine();
             Console.Write("Enter State : ");
             string state = Console.ReadLine();
-            PrintInRed("Search by City " + city + " are :\n");
-            PrintDashLine(150);
-            Console.WriteLine(PrintRow(150, "AddressBookName", "Name", "Address", "City", "State", "PhoneNo", "Email"));
-            PrintDashLine(150);
+            CustomPrint.PrintInRed("Search by City " + city + " are :\n");
+            CustomPrint.PrintDashLine();
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email"));
+            CustomPrint.PrintDashLine();
             foreach (Contacts personDetails in listContacts.Where(x => (x.City.ToLower().Equals(city.ToLower()) && x.State.ToLower().Equals(state.ToLower()))))
             {
                 Console.WriteLine(personDetails);
                 slNo++;
             }
-            PrintDashLine(150);
+            CustomPrint.PrintDashLine();
             Console.WriteLine("\nCount by City is : " + slNo);
-            PrintInRed("Search by State " + state + " are :\n");
-            PrintDashLine(150);
-            Console.WriteLine(PrintRow(150, "AddressBookName", "Name", "Address", "City", "State", "PhoneNo", "Email"));
-            PrintDashLine(150);
+            CustomPrint.PrintInRed("Search by State " + state + " are :\n");
+            CustomPrint.PrintDashLine();
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "PhoneNo", "Email"));
+            CustomPrint.PrintDashLine();
             slNo = 0;
             foreach (Contacts personDetails in listContacts)
             {
@@ -177,7 +176,7 @@
                     slNo++;
                 }
             }
-            PrintDashLine(150);
+            CustomPrint.PrintDashLine();
             Console.WriteLine("\nCount by State is : " + slNo);
         }
         //For Searching dublicate person
@@ -194,67 +193,21 @@
         public override string ToString()
         {
             string name = FirstName + " " + LastName;
-            return PrintRow(150, AddressBookName, name, Address, City, State, PhoneNo, Email);
-            //return ($"AddressBookName : {AddressBookName} ,Name : {FirstName} {LastName} ,Address : {Address} ,City : {City} ," +
-            //    $"State : {State} ,Zip : {Zip} ," +
-            //    $"PhoneNo : {PhoneNo} ,Email : {Email}");
-        }
-        public static void SortByName()
-        {
-            sortType = SortingType.SORT_BY_NAME;
-            listContacts.Sort(delegate (Contacts x, Contacts y)
-            {
-                return (x.FirstName.ToLower() + x.LastName.ToLower()).CompareTo((y.FirstName.ToLower() + y.LastName.ToLower()));
-            });
-        }
-        public static void SortByCity()
-        {
-            sortType = SortingType.SORT_BY_CITY;
-            listContacts.Sort(delegate (Contacts x, Contacts y)
-            {
-                return (x.City.ToLower()).CompareTo((y.City.ToLower()));
-            });
-        }
-        public static void SortByState()
-        {
-            sortType = SortingType.SORT_BY_STATE;
-            listContacts.Sort(delegate (Contacts x, Contacts y)
-            {
-                return (x.State.ToLower()).CompareTo((y.State.ToLower()));
-            });
-        }
-        public static void SortByZip()
-        {
-            sortType = SortingType.SORT_BY_ZIP;
-            listContacts.Sort(delegate (Contacts x, Contacts y)
-            {
-                return (x.Zip).CompareTo((y.Zip));
-            });
-        }
-        public static void SortOnConditionChooses()
-        {
-            if (sortType == SortingType.SORT_BY_ZIP)
-                SortByZip();
-            if (sortType == SortingType.SORT_BY_CITY)
-                SortByCity();
-            if (sortType == SortingType.SORT_BY_STATE)
-                SortByState();
-            if (sortType == SortingType.SORT_BY_NAME)
-                SortByName();
+            return CustomPrint.PrintRow(AddressBookName, name, Address, City, State, Zip, PhoneNo, Email);
         }
         private static string[] AskDetailsForAdding(string addressBookName)
         {
         label2:
             string[] personDetail = new string[9];
             personDetail[0] = addressBookName;
-            PrintInRed($"Address Book Name : {addressBookName}", true);
+            CustomPrint.PrintInRed($"Address Book Name : {addressBookName}", true);
             Console.Write("First Name : ");
             personDetail[1] = Console.ReadLine();
             Console.Write("Second Name : ");
             personDetail[2] = Console.ReadLine();
             if (SearchDublicates(personDetail[1], personDetail[2], addressBookName))
             {
-                PrintInMagenta("This Person is already in " + addressBookName + " Address Book\nTry to add another", true);
+                CustomPrint.PrintInMagenta("This Person is already in " + addressBookName + " Address Book\nTry to add another", true);
                 goto label2;
             }
             Console.Write("Address : ");
@@ -275,9 +228,9 @@
         {
             string[] name = new string[2];
             if (func == "Delete")
-                PrintInRed($"Delete Contact in {addressBookName}");
+                CustomPrint.PrintInRed($"Delete Contact in {addressBookName}");
             else
-                PrintInMagenta($"Edit Contact in {addressBookName}");
+                CustomPrint.PrintInMagenta($"Edit Contact in {addressBookName}");
             Console.Write("First Name : ");
             name[0] = Console.ReadLine();
             Console.Write("Second Name : ");
@@ -285,13 +238,72 @@
             return name;
         }
     }
-    //Enum that for saving sorting type
-    public enum SortingType
+    /// <summary>Class for sorting contacts</summary>
+    public class SortContacts
     {
-        SORT_BY_NAME,
-        SORT_BY_CITY,
-        SORT_BY_STATE,
-        SORT_BY_ZIP,
-        DEFAULT_SORTING
+        public static SortingType sortType = SortingType.DEFAULT_SORTING;
+        /// <summary>Enum that for saving sorting type</summary>
+        public enum SortingType
+        {
+            SORT_BY_NAME,
+            SORT_BY_CITY,
+            SORT_BY_STATE,
+            SORT_BY_ZIP,
+            DEFAULT_SORTING
+        }
+        /// <summary>Sorts contact list by name.</summary>
+        /// <param name="listContacts">The list contacts.</param>
+        public static void SortByName(List<Contacts> listContacts)
+        {
+            sortType = SortingType.SORT_BY_NAME;
+            listContacts.Sort(delegate (Contacts x, Contacts y)
+            {
+                return (x.FirstName.ToLower() + x.LastName.ToLower()).CompareTo((y.FirstName.ToLower() + y.LastName.ToLower()));
+            });
+        }
+        /// <summary>Sorts contact list by city.</summary>
+        /// <param name="listContacts">The list contacts.</param>
+        public static void SortByCity(List<Contacts> listContacts)
+        {
+            sortType = SortingType.SORT_BY_CITY;
+            listContacts.Sort(delegate (Contacts x, Contacts y)
+            {
+                return (x.City.ToLower()).CompareTo((y.City.ToLower()));
+            });
+        }
+        /// <summary>Sorts contact list by State.</summary>
+        /// <param name="listContacts">The list contacts.</param>
+        public static void SortByState(List<Contacts> listContacts)
+        {
+            sortType = SortingType.SORT_BY_STATE;
+            listContacts.Sort(delegate (Contacts x, Contacts y)
+            {
+                return (x.State.ToLower()).CompareTo((y.State.ToLower()));
+            });
+        }
+        /// <summary>Sorts contact list by zip.</summary>
+        /// <param name="listContacts">The list contacts.</param>
+        public static void SortByZip(List<Contacts> listContacts)
+        {
+            sortType = SortingType.SORT_BY_ZIP;
+            listContacts.Sort(delegate (Contacts x, Contacts y)
+            {
+                return (x.Zip).CompareTo((y.Zip));
+            });
+        }
+        /// <summary>Sorts contact list on condition choosen.</summary>
+        /// <param name="listContacts">The list contacts.</param>
+        public static void SortOnConditionChooses(List<Contacts> listContacts)
+        {
+            if (sortType == SortingType.SORT_BY_ZIP)
+                SortByZip(listContacts);
+            if (sortType == SortingType.SORT_BY_CITY)
+                SortByCity(listContacts);
+            if (sortType == SortingType.SORT_BY_STATE)
+                SortByState(listContacts);
+            if (sortType == SortingType.SORT_BY_NAME)
+                SortByName(listContacts);
+        }
     }
+
 }

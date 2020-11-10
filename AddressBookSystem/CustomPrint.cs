@@ -6,18 +6,19 @@ namespace AddressBookSystem
 {
     public class CustomPrint
     {
-        public static void PrintDashLine(int tableWidth)
+        private static int tableWidth = 147;
+        public static void PrintDashLine()
         {
-            Console.WriteLine(new string('-', tableWidth));
+            Console.WriteLine(new string('-', tableWidth + 4).PadLeft(tableWidth + 5, '+').PadRight(tableWidth + 6, '+'));
         }
-        public static string PrintRow(int tableWidth, params string[] columns)
+        public static string PrintRow(params string[] columns)
         {
             int width = (tableWidth - columns.Length) / columns.Length;
             string row = "|";
 
             foreach (string column in columns)
             {
-                row += AlignCentre(column, width) + "|";
+                row += AlignCentre(column, width+1) + "|";
             }
 
             return row;

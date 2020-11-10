@@ -1,10 +1,10 @@
 AddressBookName,FirstName,LastName,Address,City,State,Zip,PhoneNo,Email
 a3,Akash,Gupta,lane 56,pune,Maharastra,865242,88888888,akash@999exp.com
-a1,Rahul,Kumar,Lane 21,Kanpur,UP,451246,7845124578,rahul@abc.com
 a2,RAvi,Anand,lane 34,Mumbai,Maharastra,784512,9999999999,ravi999@gmail.com
-a2,ravi,kumar,K30/67,Allahabad,UP,120120,9898989898,kumar@exp.com
-a2,ravi,prakash,G30/90,Jaipur,Rajasthan,126120,9898985898,ravi@exp.com
 a3,Shreya,Gupta,lane 56,pune,Maharastra,865242,88888888,shreya@999exp.com
-a1,Shreya,Mehta,Sector 45,Noida,UP,784516,7845781122,mehta@abc.ac.in
 a1,Steve,Smith,Lane 67,Sydney,New South Wales,021201,1988556677,smith@abc.com
 a2,Steve,Smith,Lane 67,Sydney,New South Wales,021201,1988556677,smith@abc.com
+a2,ravi,prakash,G30/90,Jaipur,Rajasthan,126120,9898985898,ravi@exp.com
+a1,Rahul,Kumar,Lane 21,Kanpur,UP,451246,7845124578,rahul@abc.com
+a2,ravi,kumar,K30/67,Allahabad,UP,120120,9898989898,kumar@exp.com
+a1,Shreya,Mehta,Sector 45,Noida,UP,784516,7845781122,mehta@abc.ac.in
