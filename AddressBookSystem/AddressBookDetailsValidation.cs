@@ -15,9 +15,9 @@
             {
                 foreach (ValidationResult TotalResult in results)
                 {
-                    Contacts.PrintInMagenta($"Error Msg : {TotalResult.ErrorMessage}");
+                    CustomPrint.PrintInMagenta($"Error Msg : {TotalResult.ErrorMessage}");
                 }
-                Contacts.PrintInMagenta($"Try Again");
+                CustomPrint.PrintInMagenta($"Try Again");
                 return false;
             }
             else

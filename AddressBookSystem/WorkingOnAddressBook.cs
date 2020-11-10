@@ -83,25 +83,25 @@
                 //Sort by Name
                 case 6:
                     Contacts.sortType=SortingType.SORT_BY_NAME;
-                    Contacts.PrintInRed($"Sort by Name Selected");
+                    CustomPrint.PrintInRed($"Sort by Name Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by City
                 case 7:
                     Contacts.sortType=SortingType.SORT_BY_CITY;
-                    Contacts.PrintInRed($"Sort by City Selected");
+                    CustomPrint.PrintInRed($"Sort by City Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by State
                 case 8:
                     Contacts.sortType=SortingType.SORT_BY_STATE;
-                    Contacts.PrintInRed($"Sort by State Selected");
+                    CustomPrint.PrintInRed($"Sort by State Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by Zip
                 case 9:
                     Contacts.sortType=SortingType.SORT_BY_ZIP;
-                    Contacts.PrintInRed($"Sort by Zip Selected");
+                    CustomPrint.PrintInRed($"Sort by Zip Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //View All Contacts
@@ -123,7 +123,7 @@
                 case 13:
                     break;
                 default:
-                    Contacts.PrintInMagenta("Try Again. Wrong key");
+                    CustomPrint.PrintInMagenta("Try Again. Wrong key");
                     WorkAddressBook(addressBookObj);
                     break;
             }

@@ -39,7 +39,7 @@
                     sr.WriteLine(personDetails);
                 }
                 sr.Close();
-                Contacts.PrintInRed("Address Book Txt file has been Appended", false);
+                CustomPrint.PrintInRed("Address Book Txt file has been Appended", false);
             }
         }
         //Read from CSV file
@@ -51,7 +51,7 @@
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 var records = csv.GetRecords<Contacts>().ToList();
-                Contacts.PrintInRed("Read Data Successfully from address book CSV");
+                CustomPrint.PrintInRed("Read Data Successfully from address book CSV");
                 foreach (Contacts personDetail in records)
                 {
                     Console.WriteLine(personDetail);
@@ -76,15 +76,15 @@
             string path = @"F:\MyPrograms\Assignments\A4-AddressBook\AddressBookSystem\AddressBookSystem\Utility\AddressBook.json";
 
             IList<Contacts> addressDatas = JsonConvert.DeserializeObject<IList<Contacts>>(File.ReadAllText(path));
-            Contacts.PrintInRed("Read Data Successfully from address book JSON");
-            Contacts.PrintDashLine(150);
-            Console.WriteLine(Contacts.PrintRow(150, "AddressBookName", "Name", "Address", "City","State", "PhoneNo", "Email"));
-            Contacts.PrintDashLine(150);
+            CustomPrint.PrintInRed("Read Data Successfully from address book JSON");
+            CustomPrint.PrintDashLine(150);
+            Console.WriteLine(CustomPrint.PrintRow(150, "AddressBookName", "Name", "Address", "City","State", "PhoneNo", "Email"));
+            CustomPrint.PrintDashLine(150);
             foreach (Contacts personDetail in addressDatas)
             {
                 Console.WriteLine(personDetail);
             }
-            Contacts.PrintDashLine(150);
+            CustomPrint.PrintDashLine(150);
             WriteAddressBookCSV();
         }
         //Write in JSON File
@@ -97,7 +97,7 @@
             {
                 Contacts.SortOnConditionChooses();
                 jsonSerializer.Serialize(writer, Contacts.listContacts);
-                Contacts.PrintInRed("Saved Data Successfully to Address Book JSON");
+                CustomPrint.PrintInRed("Saved Data Successfully to Address Book JSON");
             }
         }
         //Stores saved data in csv file to Contact List- listContacts
