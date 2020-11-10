@@ -4,6 +4,7 @@
 
     class AddressBookMain
     {
+        /// <summary>The address book dictionary</summary>
         public static Dictionary<string, AddressBookModel> addressBookDict = new Dictionary<string, AddressBookModel>();
         public static void Main()
         {

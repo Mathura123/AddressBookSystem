@@ -2,27 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
     public class Contacts
     {
+        /// <summary>The list that stores address book details</summary>
         public static List<AddressBookModel> listContacts = new List<AddressBookModel>();
-        //public Contacts()
-        //{
-        //}
-        //public Contacts(string[] personDetail)
-        //{
-        //    AddressBookName = personDetail[0];
-        //    FirstName = personDetail[1];
-        //    LastName = personDetail[2];
-        //    Address = personDetail[3];
-        //    City = personDetail[4];
-        //    State = personDetail[5];
-        //    Zip = personDetail[6];
-        //    PhoneNo = personDetail[7];
-        //    Email = personDetail[8];
-        //}
+
+        /// <summary>Adds the contacts.</summary>
+        /// <param name="addressBookName">Name of the address book.</param>
         public static void AddContacts(string addressBookName)
         {
             //Creates new Contact object by getting personDeatils from AskDetailsForAdding
@@ -40,6 +28,8 @@
                 AddContacts(addressBookName);
             }
         }
+        /// <summary>Edits the contact.</summary>
+        /// <param name="addressBookName">Name of the address book.</param>
         public static void EditContact(string addressBookName)
         {
             //gets First Name And Second Name from User using 
@@ -81,6 +71,8 @@
             if (personFound == false)
                 CustomPrint.PrintInMagenta("Person not found");
         }
+        /// <summary>Deletes the contact.</summary>
+        /// <param name="addressBookName">Name of the address book.</param>
         public static void DeleteContact(string addressBookName)
         {
             //gets First Name And Second Name from User using 
@@ -104,6 +96,8 @@
             if (personFound == false)
                 CustomPrint.PrintInMagenta("Person not found", false);
         }
+        /// <summary>View all contacts in same given address book.</summary>
+        /// <param name="addressBookName">Name of the address book.</param>
         public static void AllContacts(string addressBookName)
         {
             //For Sorting Accoring to sorting type choosed
@@ -121,6 +115,7 @@
             }
             CustomPrint.PrintDashLine();
         }
+        /// <summary>Views All contacts in same state or city for all address book.</summary>
         public static void SearchPersonByCityOrState()
         {
             //For Sorting Accoring to sorting type choosed
@@ -158,7 +153,12 @@
             CustomPrint.PrintDashLine();
             Console.WriteLine("\nCount by State is : " + slNo);
         }
-        //For Searching dublicate person
+
+        /// <summary>Searches the dublicates.</summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="addressBookName">Name of the address book.</param>
+        /// <returns>if dublicate search successfull then returns true else false</returns>
         private static bool SearchDublicates(string firstName, string lastName, string addressBookName)
         {
             if (listContacts.Any(e => (e.FirstName.ToLower().Equals(firstName.ToLower()) && e.LastName.ToLower().Equals(lastName.ToLower()) && e.AddressBookName.Equals(addressBookName))))
@@ -168,8 +168,11 @@
             else
                 return false;
         }
-        //Overrides ToString Method for object of Contacts Class
-        
+        /// <summary>Asks the details for adding.</summary>
+        /// <param name="addressBookName">Name of the address book.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         private static string[] AskDetailsForAdding(string addressBookName)
         {
         label2:
@@ -199,6 +202,12 @@
             personDetail[8] = Console.ReadLine();
             return personDetail;
         }
+        /// <summary>Asks the detail for deleting or editing.</summary>
+        /// <param name="addressBookName">Name of the address book.</param>
+        /// <param name="func">The function.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         private static string[] AskDetailForDeletingOrEditing(string addressBookName, string func)
         {
             string[] name = new string[2];

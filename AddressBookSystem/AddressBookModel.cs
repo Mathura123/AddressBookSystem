@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace AddressBookSystem
+﻿namespace AddressBookSystem
 {
+    using System.ComponentModel.DataAnnotations;
+
+    /// <summary>Address Book Model class</summary>
     public class AddressBookModel
     {
         public string AddressBookName { get; set; }
