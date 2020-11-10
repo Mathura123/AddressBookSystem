@@ -176,3 +176,11 @@ inner join people_contact pc
 on adp.FirstName = pc.FirstName and adp.LastName = pc.LastName
 inner join type t
 on pc.FirstName = t.FirstName and pc.LastName = t.LastName
+
+create procedure RetriveContacts
+as
+select AddressBookName, pc.FirstName,pc.LastName,Address,City,State,Zipcode,PhoneNumber,Email from address_book_person_name adp 
+inner join people_contact pc
+on adp.FirstName = pc.FirstName and adp.LastName = pc.LastName
+
+exec RetriveContacts

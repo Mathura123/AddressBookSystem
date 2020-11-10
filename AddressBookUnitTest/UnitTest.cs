@@ -13,8 +13,16 @@ namespace AddressBookUnitTest
             string addressBookName = "A1";
             WorkingOnAddressBook addressBookObj = new WorkingOnAddressBook();
             addressBookObj.AddressBookName = addressBookName;
-            bool result =AddressBookDetailsValidation.ValidateAddressBookName(addressBookObj);
+            bool result =AddressBookDetailsValidation.Validate(addressBookObj);
             Assert.AreEqual(result, expected);
+        }
+        [TestMethod]
+        public void RetriveContactsFromDB_ShouldReturn_True_IfContactsRecieved()
+        {
+            bool expected = true;
+            AddressBookDBWork dbWorkObj = new AddressBookDBWork();
+            bool result = dbWorkObj.RetriveAllContactsFromDB();
+            Assert.AreEqual(expected, result);
         }
     }
 }
