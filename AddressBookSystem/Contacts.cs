@@ -66,6 +66,7 @@
                         break;
                 }
                 personFound = true;
+                AddressBookDBWork.UpdateContactInDB(item);
                 CustomPrint.PrintInRed("Details have been updated in " + addressBookName, false);
             }
             if (personFound == false)
@@ -98,11 +99,11 @@
         }
         /// <summary>View all contacts in same given address book.</summary>
         /// <param name="addressBookName">Name of the address book.</param>
-        public static void AllContacts(string addressBookName)
+        public static void AllContactsInSameAddressBook(string addressBookName)
         {
             //For Sorting Accoring to sorting type choosed
             SortContacts.SortOnConditionChooses(Contacts.listContacts);
-            CustomPrint.PrintInRed("All Contacts");
+            CustomPrint.PrintInRed($"All Contacts in address book {addressBookName}");
             CustomPrint.PrintDashLine();
             Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email"));
             CustomPrint.PrintDashLine();
@@ -114,6 +115,22 @@
                 }
             }
             CustomPrint.PrintDashLine();
+        }
+        /// <summary>View all contacts in DB.</summary>
+        public static void AllContacts()
+        {
+            //For Sorting Accoring to sorting type choosed
+            SortContacts.SortOnConditionChooses(Contacts.listContacts);
+            CustomPrint.PrintInRed($"All Contacts in every address book");
+            CustomPrint.PrintDashLine();
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email"));
+            CustomPrint.PrintDashLine();
+            foreach (AddressBookModel item in listContacts)
+            {
+                    Console.WriteLine(item);
+            }
+            CustomPrint.PrintDashLine();
+
         }
         /// <summary>Views All contacts in same state or city for all address book.</summary>
         public static void SearchPersonByCityOrState()

@@ -76,7 +76,7 @@
             string path = @"F:\MyPrograms\Assignments\A4-AddressBook\AddressBookSystem\AddressBookSystem\Utility\AddressBook.json";
 
             IList<AddressBookModel> addressDatas = JsonConvert.DeserializeObject<IList<AddressBookModel>>(File.ReadAllText(path));
-            CustomPrint.PrintInRed("Read Data Successfully from address book JSON");
+            CustomPrint.PrintInRed("Read Data Successfully");
             CustomPrint.PrintDashLine();
             Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State","Zip","PhoneNo", "Email"));
             CustomPrint.PrintDashLine();
@@ -97,7 +97,7 @@
             {
                 SortContacts.SortOnConditionChooses(Contacts.listContacts);
                 jsonSerializer.Serialize(writer, Contacts.listContacts);
-                CustomPrint.PrintInRed("Saved Data Successfully to Address Book JSON");
+                CustomPrint.PrintInRed("Saved Data Successfully");
             }
         }
         //Stores saved data in csv file to Contact List- listContacts

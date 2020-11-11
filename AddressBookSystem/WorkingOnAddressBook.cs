@@ -9,6 +9,7 @@
         public string AddressBookName { get; set; }
         public static void AddressBook()
         {
+            AddressBookDBWork.StoreAllContactsToList();
             Console.WriteLine("=========================================");
             Console.Write("Enter the new/saved Address Book Name : ");
             WorkingOnAddressBook addressBookObj = new WorkingOnAddressBook();
@@ -40,87 +41,71 @@
         private static void AskAddressBookOption()
         {
             Console.WriteLine("-----------------------------------------\n" +
-                "Enter 1 : Add Contact\nEnter 2 : Edit Contact\nEnter 3 : Delete Person From Contact\n" +
-                "Enter 4 : Create new Address Book or to Work on saved Address Book\n" +
-                "Enter 5 : Search Person by City or State\n" +
-                "Enter 6 : Sort all contacts by Name\n" +
-                "Enter 7 : Sort all contacts by City\n" +
-                "Enter 8 : Sort all contacts by State\n" +
-                "Enter 9 : Sort all contacts by Zip\n" +
-                "Enter 10 : View all Contacts in this Address Book\n" +
-                "Enter 11 : View all Saved Contacts\n" +
-                "Enter 12 : Save Address Book\n" +
-                "Enter 13 : Exit");
+                "Enter 1 : Edit Contact\n" +
+                "Enter 2 : Create new Address Book or to Work on saved Address Book\n" +
+                "Enter 3 : Search Person by City or State\n" +
+                "Enter 4 : Sort all contacts by Name\n" +
+                "Enter 5 : Sort all contacts by City\n" +
+                "Enter 6 : Sort all contacts by State\n" +
+                "Enter 7 : Sort all contacts by Zip\n" +
+                "Enter 8 : View all Contacts in this Address Book\n" +
+                "Enter 9 : View all Contacts\n" +
+                "Enter 10 : Exit");
         }
         private static void ActionWithGivenKey(int key, WorkingOnAddressBook addressBookObj)
         {
             switch (key)
             {
-                //For Adding new Contact
-                case 1:
-                    Contacts.AddContacts(addressBookObj.AddressBookName);
-                    WorkAddressBook(addressBookObj);
-                    break;
                 //For Editing the Contacts
-                case 2:
+                case 1:
                     Contacts.EditContact(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
-                //For Deleting Contacts
-                case 3:
-                    Contacts.DeleteContact(addressBookObj.AddressBookName);
-                    WorkAddressBook(addressBookObj);
-                    break;
                 //For opening new/saved address book
-                case 4:
+                case 2:
                     AddressBook();
                     break;
                 //Search By city/state
-                case 5:
+                case 3:
                     Contacts.SearchPersonByCityOrState();
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by Name
-                case 6:
+                case 4:
                     SortContacts.sortType=SortContacts.SortingType.SORT_BY_NAME;
                     CustomPrint.PrintInRed($"Sort by Name Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by City
-                case 7:
+                case 5:
                     SortContacts.sortType=SortContacts.SortingType.SORT_BY_CITY;
                     CustomPrint.PrintInRed($"Sort by City Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by State
-                case 8:
+                case 6:
                     SortContacts.sortType=SortContacts.SortingType.SORT_BY_STATE;
                     CustomPrint.PrintInRed($"Sort by State Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by Zip
-                case 9:
+                case 7:
                     SortContacts.sortType=SortContacts.SortingType.SORT_BY_ZIP;
                     CustomPrint.PrintInRed($"Sort by Zip Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //View All Contacts
-                case 10:
-                    Contacts.AllContacts(addressBookObj.AddressBookName);
+                case 8:
+                    Contacts.AllContactsInSameAddressBook(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
                 //Read JSON File
-                case 11:
-                    AddressBookFileIO.ReadAddressBookJSON();
-                    WorkAddressBook(addressBookObj);
-                    break;
-                //Write to JSON File
-                case 12:
-                    AddressBookFileIO.WriteAddressBookJSON();
+                case 9:
+                    Contacts.AllContacts();
                     WorkAddressBook(addressBookObj);
                     break;
                 //Exit
-                case 13:
+                case 10:
                     break;
                 default:
                     CustomPrint.PrintInMagenta("Try Again. Wrong key");

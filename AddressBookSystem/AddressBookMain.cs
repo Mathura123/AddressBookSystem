@@ -11,10 +11,12 @@
             CustomPrint.PrintInRed("*****Welcome to Address Book Program*****", false);
             //For storing saved data from file in listContacts
             //AddressBookFileIO.StoreAddressBookDetailsInContactsList();
+            //AddressBookDBWork.StoreAllContactsToList();
             //Calling AddressBook Method for Choosing Option
-            //WorkingOnAddressBook.AddressBook();
-            AddressBookDBWork obj = new AddressBookDBWork();
-            obj.RetriveAllContactsFromDB();
+            WorkingOnAddressBook.AddressBook();
+            //AddressBookDBWork obj = new AddressBookDBWork();
+            
+            AddressBookDBWork.RetriveAllContactsFromDB();
         }
     }
 }

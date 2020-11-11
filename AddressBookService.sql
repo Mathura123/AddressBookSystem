@@ -184,3 +184,26 @@ inner join people_contact pc
 on adp.FirstName = pc.FirstName and adp.LastName = pc.LastName
 
 exec RetriveContacts
+
+select * from people_contact
+--inserted some more values in prople_contact and address_book_people_contact
+insert into people_contact values
+('Akash','Gupta','lane 56','pune','Maharastra','865242','88888888','akash@999exp.com'),
+('Kartik','Rastogi','K90/67 Street 89,Varanasi, Uttar Pradesh','Varanasi','UP','451245','7788994455','kartik555@gmail.com'),
+('RAvi','Anand','lane 34','Mumbai','Maharastra','784512','9999999999','ravi999@gmail.com'),
+('ravi','kumar','K30/67, Allahabad','Allahabad','UP','120120','9898989898','kumar@exp.com'),
+('ravi','prakash','G30/90','Jaipur','Rajasthan','126120','9898985898','ravi@exp.com'),
+('Shreya','Gupta','lane 56','pune','Maharastra','865242','88888888','shreya@999exp.com'),
+('Shreya','Mehta','Sector 45','Noida','UP','784516','7845781122','mehta@abc.ac.in'),
+('Steve','Smith','Lane 67','Sydney','New South Wales','021201','1988556677','smith@abc.com')
+insert into address_book_person_name values
+('a3','Akash','Gupta'),
+('a1','Kartik','Rastogi'),
+('a1','Rahul','Kumar'),
+('a2','RAvi','Anand'),
+('a2','ravi','kumar'),
+('a2','ravi','prakash'),
+('a3','Shreya','Gupta'),
+('a1','Shreya','Mehta'),
+('a1','Steve','Smith'),
+('a2','Steve','Smith')
