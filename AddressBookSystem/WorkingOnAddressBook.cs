@@ -41,76 +41,82 @@
         private static void AskAddressBookOption()
         {
             Console.WriteLine("-----------------------------------------\n" +
-                "Enter 1 : Edit Contact\n" +
-                "Enter 2 : Create new Address Book or to Work on saved Address Book\n" +
-                "Enter 3 : Search Person by City or State\n" +
-                "Enter 4 : Sort all contacts by Name\n" +
-                "Enter 5 : Sort all contacts by City\n" +
-                "Enter 6 : Sort all contacts by State\n" +
-                "Enter 7 : Sort all contacts by Zip\n" +
-                "Enter 8 : View all Contacts in this Address Book\n" +
-                "Enter 9 : View all Contacts\n" +
-                "Emter 10 : View All Contacts in Given Date Range\n"+
-                "Enter 11 : Exit");
+                "Enter 1 : Add Contact\n" +
+                "Enter 2 : Edit Contact\n" +
+                "Enter 3 : Create new Address Book or to Work on saved Address Book\n" +
+                "Enter 4 : Search Person by City or State\n" +
+                "Enter 5 : Sort all contacts by Name\n" +
+                "Enter 6 : Sort all contacts by City\n" +
+                "Enter 7 : Sort all contacts by State\n" +
+                "Enter 8 : Sort all contacts by Zip\n" +
+                "Enter 9 : View all Contacts in this Address Book\n" +
+                "Enter 10 : View all Contacts\n" +
+                "Emter 11 : View All Contacts in Given Date Range\n" +
+                "Enter 12 : Exit");
         }
         private static void ActionWithGivenKey(int key, WorkingOnAddressBook addressBookObj)
         {
             switch (key)
             {
-                //For Editing the Contacts
+                //For Adding the contact
                 case 1:
+                    Contacts.AddContacts(addressBookObj.AddressBookName);
+                    WorkAddressBook(addressBookObj);
+                    break;
+                //For Editing the Contacts
+                case 2:
                     Contacts.EditContact(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
                 //For opening new/saved address book
-                case 2:
+                case 3:
                     AddressBook();
                     break;
                 //Search By city/state
-                case 3:
+                case 4:
                     Contacts.SearchPersonByCityOrState();
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by Name
-                case 4:
-                    SortContacts.sortType=SortContacts.SortingType.SORT_BY_NAME;
+                case 5:
+                    SortContacts.sortType = SortContacts.SortingType.SORT_BY_NAME;
                     CustomPrint.PrintInRed($"Sort by Name Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by City
-                case 5:
-                    SortContacts.sortType=SortContacts.SortingType.SORT_BY_CITY;
+                case 6:
+                    SortContacts.sortType = SortContacts.SortingType.SORT_BY_CITY;
                     CustomPrint.PrintInRed($"Sort by City Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by State
-                case 6:
-                    SortContacts.sortType=SortContacts.SortingType.SORT_BY_STATE;
+                case 7:
+                    SortContacts.sortType = SortContacts.SortingType.SORT_BY_STATE;
                     CustomPrint.PrintInRed($"Sort by State Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //Sort by Zip
-                case 7:
-                    SortContacts.sortType=SortContacts.SortingType.SORT_BY_ZIP;
+                case 8:
+                    SortContacts.sortType = SortContacts.SortingType.SORT_BY_ZIP;
                     CustomPrint.PrintInRed($"Sort by Zip Selected");
                     WorkAddressBook(addressBookObj);
                     break;
                 //View All Contacts
-                case 8:
+                case 9:
                     Contacts.AllContactsInSameAddressBook(addressBookObj.AddressBookName);
                     WorkAddressBook(addressBookObj);
                     break;
                 //Read JSON File
-                case 9:
+                case 10:
                     Contacts.AllContacts();
                     WorkAddressBook(addressBookObj);
                     break;
                 //Exit
-                case 10:
+                case 11:
                     Contacts.AllContactsInGivenDateRange();
                     WorkAddressBook(addressBookObj);
                     break;
-                case 11:
+                case 12:
                     break;
                 default:
                     CustomPrint.PrintInMagenta("Try Again. Wrong key");

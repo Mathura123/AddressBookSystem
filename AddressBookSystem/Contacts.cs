@@ -18,8 +18,16 @@
             //Adds objContact to listContacts if objContacts is valid 
             if (AddressBookDetailsValidation.Validate(objContacts))
             {
-                listContacts.Add(objContacts);
-                CustomPrint.PrintInRed($"Contact has been Added to {addressBookName}", false);
+                objContacts.DateAdded = DateTime.Now;
+                if (AddressBookDBWork.AddContactToDB(objContacts))
+                {
+                    listContacts.Add(objContacts);
+                    CustomPrint.PrintInRed($"Contact has been Added to {addressBookName}", false);
+                }
+                else
+                {
+                    CustomPrint.PrintInMagenta($"Contact has not been Added to", false);
+                }
             }
             //Given Error if objContacts is invalid 
             else
@@ -178,13 +186,13 @@
                 DateTime[] dates = AskForDateRange();
                 AddressBookDBWork.GetContactInGivenDateRange(dates[0], dates[1]);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 CustomPrint.PrintInMagenta(e.Message + "\nTry Again");
                 AllContactsInGivenDateRange();
             }
         }
-        
+
         /// <summary>Searches the dublicates.</summary>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>

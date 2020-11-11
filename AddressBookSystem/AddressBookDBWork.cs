@@ -24,7 +24,7 @@
                     {
                         CustomPrint.PrintInRed("All Contacts from DB");
                         CustomPrint.PrintDashLine();
-                        Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email","Date Added"));
+                        Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email", "Date Added"));
                         CustomPrint.PrintDashLine();
                         while (dr.Read())
                         {
@@ -107,7 +107,7 @@
                     throw new AddressBookException(AddressBookException.ExceptionType.CONTACT_NOT_FOUND, "Contact not found");
                 }
             }
-            catch(AddressBookException ae)
+            catch (AddressBookException ae)
             {
                 CustomPrint.PrintInMagenta(ae.Message);
                 return false;
@@ -124,7 +124,7 @@
         /// <returns>
         ///   <br />
         /// </returns>
-        public static bool GetContactInGivenDateRange(DateTime startDate,DateTime endDate)
+        public static bool GetContactInGivenDateRange(DateTime startDate, DateTime endDate)
         {
             try
             {
@@ -132,7 +132,7 @@
                 using (SqlConnection connection = new SqlConnection(connetionString))
                 {
                     SqlCommand command = new SqlCommand($"select AddressBookName, pc.FirstName,pc.LastName,Address,City,State,Zipcode,PhoneNumber,Email,date_added " +
-                        $"from address_book_person_name adp inner join people_contact pc "+
+                        $"from address_book_person_name adp inner join people_contact pc " +
                         $"on adp.FirstName = pc.FirstName and adp.LastName = pc.LastName " +
                         $"where date_added between '{startDate.Year}-{startDate.Month}-{startDate.Day}' and '{endDate.Year}-{endDate.Month}-{endDate.Day}'", connection);
                     connection.Open();
@@ -276,6 +276,49 @@
                 CustomPrint.PrintInMagenta(e.Message);
                 return false;
             }
+        }
+        public static bool AddContactToDB(AddressBookModel addressBookObj)
+        {
+            bool result;
+            try
+            {
+                SqlTransaction objTrans = null;
+                using (SqlConnection connection = new SqlConnection(connetionString))
+                {
+                    connection.Open();
+                    objTrans = connection.BeginTransaction();
+                    SqlCommand command1 = new SqlCommand($"insert into people_contact values" +
+                        $"('{addressBookObj.FirstName}','{addressBookObj.LastName}','{addressBookObj.Address}','" +
+                        $"{addressBookObj.City}','{addressBookObj.State}','{addressBookObj.Zip}','{addressBookObj.PhoneNo}','" +
+                        $"{addressBookObj.Email}','{addressBookObj.DateAdded.Year}-{addressBookObj.DateAdded.Month}-{addressBookObj.DateAdded.Day}')", connection, objTrans);
+                    SqlCommand command2 = new SqlCommand($"insert into address_book_person_name values" +
+                        $"('{addressBookObj.AddressBookName}','{addressBookObj.FirstName}','{addressBookObj.LastName}')", connection, objTrans);
+                    try
+                    {
+                        int noOfRow1 = command1.ExecuteNonQuery();
+                        int noOfRow2 = command2.ExecuteNonQuery();
+                        objTrans.Commit();
+                        CustomPrint.PrintInRed($"{noOfRow2} rows affected");
+                        result = true;
+                    }
+                    catch (Exception e)
+                    {
+                        CustomPrint.PrintInMagenta(e.Message);
+                        objTrans.Rollback();
+                        result = false;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                CustomPrint.PrintInMagenta(e.Message);
+                result = false;
+            }
+            return result;
         }
     }
 }

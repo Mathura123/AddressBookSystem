@@ -83,5 +83,23 @@ namespace AddressBookUnitTest
             bool result = AddressBookDBWork.GetContactsInGivenState("UP");
             Assert.AreEqual(expected, result);
         }
+        [TestMethod]
+        public void AddContactInDb_ShouldReturn_True_AfterAdding_TheContact()
+        {
+            bool expected = true;
+            AddressBookModel objModel = new AddressBookModel();
+            objModel.FirstName = "Radha";
+            objModel.LastName = "Gupta";
+            objModel.Address = "Sector 90";
+            objModel.City = "Noida";
+            objModel.State = "UP";
+            objModel.PhoneNo = "9878987898";
+            objModel.Zip = "121212";
+            objModel.Email = "radha@exp.com";
+            objModel.AddressBookName = "a4";
+            objModel.DateAdded = DateTime.Now;
+            bool result = AddressBookDBWork.AddContactToDB(objModel);
+            Assert.AreEqual(expected, result);
+        }
     }
 }
