@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq.Expressions;
 
     public class AddressBookDetailsValidation
     {
@@ -15,7 +16,14 @@
             {
                 foreach (ValidationResult TotalResult in results)
                 {
-                    CustomPrint.PrintInMagenta($"Error Msg : {TotalResult.ErrorMessage}");
+                    try
+                    {
+                        throw new AddressBookException(AddressBookException.ExceptionType.INCORRECT_DETAIL, $"Error Msg : {TotalResult.ErrorMessage}");
+                    }
+                    catch (AddressBookException ae)
+                    {
+                        CustomPrint.PrintInMagenta(ae.Message);
+                    }
                 }
                 CustomPrint.PrintInMagenta($"Try Again");
                 return false;
@@ -23,5 +31,6 @@
             else
                 return true;
         }
+
     }
 }

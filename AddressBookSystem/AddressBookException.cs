@@ -8,7 +8,8 @@ namespace AddressBookSystem
     {
         public enum ExceptionType
         {
-            CONTACT_NOT_FOUND
+            CONTACT_NOT_FOUND,
+            INCORRECT_DETAIL
         }
         private ExceptionType type;
         public AddressBookException(ExceptionType type, string message) : base(message)

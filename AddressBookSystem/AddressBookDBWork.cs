@@ -107,12 +107,12 @@
             }
             catch(AddressBookException ae)
             {
-                Console.WriteLine(ae.Message);
+                CustomPrint.PrintInMagenta(ae.Message);
                 return false;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                CustomPrint.PrintInMagenta(e.Message);
                 return false;
             }
         }
