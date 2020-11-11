@@ -320,5 +320,28 @@
             }
             return result;
         }
+        public static bool DeleteContactFromDB(AddressBookModel addressBookObj)
+        {
+            bool result;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connetionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand($"delete from people_contact " +
+                        $"where FirstName = '{addressBookObj.FirstName}' and LastName = '{addressBookObj.LastName}'", connection);
+                    int noOfRow = command.ExecuteNonQuery();
+                    CustomPrint.PrintInRed($"{noOfRow} rows affected");
+                    result = true;
+                    connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                CustomPrint.PrintInMagenta(e.Message);
+                result = false;
+            }
+            return result;
+        }
     }
 }

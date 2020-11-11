@@ -214,8 +214,11 @@ select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME ='people_contact'
 alter table people_contact
 add date_added date not null default GetDate()
 
+select * from address_book_person_name
 select * from people_contact
 
+delete from address_book_person_name 
+where AddressBookName = 'a1' and FirstName = 'kartik' and LastName = 'rastogi'
 update people_contact set date_added = '2020-11-10' where FirstName = 'Akash' or FirstName = 'Rahul' or FirstName = 'ravi'
 
 --Altered stored procedure to give date_added as well

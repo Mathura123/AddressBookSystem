@@ -96,13 +96,16 @@
             {
                 personToDelete = item;
                 personFound = true;
-                CustomPrint.PrintInRed("Person removed from Contacts in " + addressBookName, false);
                 break;
             }
             //Removes the Contacts if person found
-            listContacts.Remove(personToDelete);
+            if (personFound && AddressBookDBWork.DeleteContactFromDB(personToDelete))
+            {
+                listContacts.Remove(personToDelete);
+                CustomPrint.PrintInRed("Person removed from Contacts in " + addressBookName, false);
+            }
             //Gives error if person not found
-            if (personFound == false)
+            else
                 CustomPrint.PrintInMagenta("Person not found", false);
         }
         /// <summary>View all contacts in same given address book.</summary>
