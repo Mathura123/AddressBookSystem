@@ -207,3 +207,20 @@ insert into address_book_person_name values
 ('a1','Shreya','Mehta'),
 ('a1','Steve','Smith'),
 ('a2','Steve','Smith')
+
+
+--added column date_added
+select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME ='people_contact'
+alter table people_contact
+add date_added date not null default GetDate()
+
+select * from people_contact
+
+update people_contact set date_added = '2020-11-10' where FirstName = 'Akash' or FirstName = 'Rahul' or FirstName = 'ravi'
+
+--Altered stored procedure to give date_added as well
+ALTER procedure [dbo].[RetriveContacts]
+as
+select AddressBookName, pc.FirstName,pc.LastName,Address,City,State,Zipcode,PhoneNumber,Email,date_added from address_book_person_name adp 
+inner join people_contact pc
+on adp.FirstName = pc.FirstName and adp.LastName = pc.LastName

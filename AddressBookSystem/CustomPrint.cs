@@ -1,10 +1,11 @@
 ﻿namespace AddressBookSystem
 {
     using System;
+    using System.Drawing;
 
     public class CustomPrint
     {
-        private static int tableWidth = 147;
+        private static int tableWidth = 148;
         /// <summary>Prints the dash line.</summary>
         public static void PrintDashLine()
         {

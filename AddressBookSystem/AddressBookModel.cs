@@ -1,5 +1,7 @@
 ﻿namespace AddressBookSystem
 {
+    using Microsoft.VisualBasic;
+    using System;
     using System.ComponentModel.DataAnnotations;
 
     /// <summary>Address Book Model class</summary>
@@ -26,7 +28,7 @@
         [EmailAddress]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-
+        public DateTime DateAdded { get; set; }
         public AddressBookModel()
         {
         }
@@ -46,7 +48,7 @@
         public override string ToString()
         {
             string name = FirstName + " " + LastName;
-            return CustomPrint.PrintRow(AddressBookName, name, Address, City, State, Zip, PhoneNo, Email);
+            return CustomPrint.PrintRow(AddressBookName, name, Address, City, State, Zip, PhoneNo, Email,DateAdded.ToShortDateString());
         }
     }
 }

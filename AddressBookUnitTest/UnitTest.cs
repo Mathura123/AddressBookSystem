@@ -50,6 +50,7 @@ namespace AddressBookUnitTest
             modelObj.State = "Maharastra";
             modelObj.Zip = "951245";
             modelObj.PhoneNo = "9865326578";
+            modelObj.Email = "rakesh@exp.com";
             bool result = AddressBookDBWork.UpdateContactInDB(modelObj);
             Assert.AreEqual(expected, result);
         }

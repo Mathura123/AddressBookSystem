@@ -24,7 +24,7 @@
                     {
                         CustomPrint.PrintInRed("All Contacts from DB");
                         CustomPrint.PrintDashLine();
-                        Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email"));
+                        Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email","Date Added"));
                         CustomPrint.PrintDashLine();
                         while (dr.Read())
                         {
@@ -37,6 +37,7 @@
                             addressBookObj.Zip = dr.GetString(6);
                             addressBookObj.PhoneNo = dr.GetString(7);
                             addressBookObj.Email = dr.GetString(8);
+                            addressBookObj.DateAdded = dr.GetDateTime(9);
                             Console.WriteLine(addressBookObj);
                         }
                         CustomPrint.PrintDashLine();
@@ -76,6 +77,7 @@
                             addressBookObj.Zip = dr.GetString(6);
                             addressBookObj.PhoneNo = dr.GetString(7);
                             addressBookObj.Email = dr.GetString(8);
+                            addressBookObj.DateAdded = dr.GetDateTime(9);
                             Contacts.listContacts.Add(addressBookObj);
                         }
                     }

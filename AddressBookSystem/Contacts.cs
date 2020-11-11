@@ -105,7 +105,7 @@
             SortContacts.SortOnConditionChooses(Contacts.listContacts);
             CustomPrint.PrintInRed($"All Contacts in address book {addressBookName}");
             CustomPrint.PrintDashLine();
-            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email"));
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email","Date Added"));
             CustomPrint.PrintDashLine();
             foreach (AddressBookModel item in listContacts)
             {
@@ -123,7 +123,7 @@
             SortContacts.SortOnConditionChooses(Contacts.listContacts);
             CustomPrint.PrintInRed($"All Contacts in every address book");
             CustomPrint.PrintDashLine();
-            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email"));
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email","Date Added"));
             CustomPrint.PrintDashLine();
             foreach (AddressBookModel item in listContacts)
             {
@@ -145,7 +145,7 @@
             string state = Console.ReadLine();
             CustomPrint.PrintInRed("Search by City " + city + " are :\n");
             CustomPrint.PrintDashLine();
-            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email"));
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email","Date Added"));
             CustomPrint.PrintDashLine();
             foreach (AddressBookModel personDetails in listContacts.Where(x => (x.City.ToLower().Equals(city.ToLower()) && x.State.ToLower().Equals(state.ToLower()))))
             {
@@ -156,7 +156,7 @@
             Console.WriteLine("\nCount by City is : " + slNo);
             CustomPrint.PrintInRed("Search by State " + state + " are :\n");
             CustomPrint.PrintDashLine();
-            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email"));
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email","Date Added"));
             CustomPrint.PrintDashLine();
             slNo = 0;
             foreach (AddressBookModel personDetails in listContacts)
