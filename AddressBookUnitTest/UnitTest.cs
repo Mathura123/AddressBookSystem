@@ -69,5 +69,19 @@ namespace AddressBookUnitTest
             bool result = AddressBookDBWork.GetContactInGivenDateRange(Convert.ToDateTime("10/11/2020"), DateTime.Now);
             Assert.AreEqual(expected, result);
         }
+        [TestMethod]
+        public void GetContactsInGivenCity_ShouldReturn_True_IfContactsFound_InGivenCity()
+        {
+            bool expected = true;
+            bool result = AddressBookDBWork.GetContactsInGivenCity("Pune", "Maharastra");
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod]
+        public void GetContactsInGivenState_ShouldReturn_True_IfContactsFound_InGivenState()
+        {
+            bool expected = true;
+            bool result = AddressBookDBWork.GetContactsInGivenState("UP");
+            Assert.AreEqual(expected, result);
+        }
     }
 }
