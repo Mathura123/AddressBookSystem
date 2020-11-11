@@ -1,5 +1,6 @@
 using AddressBookSystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace AddressBookUnitTest
 {
@@ -52,6 +53,20 @@ namespace AddressBookUnitTest
             modelObj.PhoneNo = "9865326578";
             modelObj.Email = "rakesh@exp.com";
             bool result = AddressBookDBWork.UpdateContactInDB(modelObj);
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod]
+        public void GetContactInGivenDateRange_ShouldReturn_False_IfNoContact_InGivenDateRange()
+        {
+            bool expected = false;
+            bool result = AddressBookDBWork.GetContactInGivenDateRange(Convert.ToDateTime("12/10/2020"),Convert.ToDateTime("13/10/2020"));
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod]
+        public void GetContactInGivenDateRange_ShouldReturn_True_IfContact_InGivenDateRange()
+        {
+            bool expected = true;
+            bool result = AddressBookDBWork.GetContactInGivenDateRange(Convert.ToDateTime("10/11/2020"), DateTime.Now);
             Assert.AreEqual(expected, result);
         }
     }

@@ -50,7 +50,8 @@
                 "Enter 7 : Sort all contacts by Zip\n" +
                 "Enter 8 : View all Contacts in this Address Book\n" +
                 "Enter 9 : View all Contacts\n" +
-                "Enter 10 : Exit");
+                "Emter 10 : View All Contacts in Given Date Range\n"+
+                "Enter 11 : Exit");
         }
         private static void ActionWithGivenKey(int key, WorkingOnAddressBook addressBookObj)
         {
@@ -106,6 +107,10 @@
                     break;
                 //Exit
                 case 10:
+                    Contacts.AllContactsInGivenDateRange();
+                    WorkAddressBook(addressBookObj);
+                    break;
+                case 11:
                     break;
                 default:
                     CustomPrint.PrintInMagenta("Try Again. Wrong key");

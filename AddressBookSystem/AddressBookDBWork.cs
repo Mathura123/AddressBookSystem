@@ -48,7 +48,7 @@
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                CustomPrint.PrintInMagenta(e.Message);
                 return false;
             }
         }
@@ -86,7 +86,7 @@
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                CustomPrint.PrintInMagenta(e.Message);
             }
         }
         /// <summary>Updates the contact.</summary>
@@ -110,6 +110,63 @@
             catch(AddressBookException ae)
             {
                 CustomPrint.PrintInMagenta(ae.Message);
+                return false;
+            }
+            catch (Exception e)
+            {
+                CustomPrint.PrintInMagenta(e.Message);
+                return false;
+            }
+        }
+        /// <summary>Gets the contacts in given date range.</summary>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
+        public static bool GetContactInGivenDateRange(DateTime startDate,DateTime endDate)
+        {
+            try
+            {
+                AddressBookModel addressBookObj = new AddressBookModel();
+                using (SqlConnection connection = new SqlConnection(connetionString))
+                {
+                    SqlCommand command = new SqlCommand($"select AddressBookName, pc.FirstName,pc.LastName,Address,City,State,Zipcode,PhoneNumber,Email,date_added " +
+                        $"from address_book_person_name adp inner join people_contact pc "+
+                        $"on adp.FirstName = pc.FirstName and adp.LastName = pc.LastName " +
+                        $"where date_added between '{startDate.Year}-{startDate.Month}-{startDate.Day}' and '{endDate.Year}-{endDate.Month}-{endDate.Day}'", connection);
+                    connection.Open();
+                    SqlDataReader dr = command.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        CustomPrint.PrintInRed($"All Contacts from DB in between {startDate.ToShortDateString()} and {endDate.ToShortDateString()}");
+                        CustomPrint.PrintDashLine();
+                        Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email", "Date Added"));
+                        CustomPrint.PrintDashLine();
+                        while (dr.Read())
+                        {
+                            addressBookObj.AddressBookName = dr.GetString(0);
+                            addressBookObj.FirstName = dr.GetString(1);
+                            addressBookObj.LastName = dr.GetString(2);
+                            addressBookObj.Address = dr.GetString(3);
+                            addressBookObj.City = dr.GetString(4);
+                            addressBookObj.State = dr.GetString(5);
+                            addressBookObj.Zip = dr.GetString(6);
+                            addressBookObj.PhoneNo = dr.GetString(7);
+                            addressBookObj.Email = dr.GetString(8);
+                            addressBookObj.DateAdded = dr.GetDateTime(9);
+                            Console.WriteLine(addressBookObj);
+                        }
+                        CustomPrint.PrintDashLine();
+                        connection.Close();
+                        return true;
+                    }
+                    throw new AddressBookException(AddressBookException.ExceptionType.No_DATA_IN_GIVEN_DATE_RANGE, "No Contacts in Given Date Range");
+                }
+            }
+            catch (AddressBookException e)
+            {
+                CustomPrint.PrintInMagenta(e.Message);
                 return false;
             }
             catch (Exception e)

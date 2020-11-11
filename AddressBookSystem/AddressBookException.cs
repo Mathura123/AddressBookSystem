@@ -9,7 +9,9 @@ namespace AddressBookSystem
         public enum ExceptionType
         {
             CONTACT_NOT_FOUND,
-            INCORRECT_DETAIL
+            No_DATA_IN_GIVEN_DATE_RANGE,
+            INCORRECT_DETAIL,
+            INVALID_DATE
         }
         private ExceptionType type;
         public AddressBookException(ExceptionType type, string message) : base(message)

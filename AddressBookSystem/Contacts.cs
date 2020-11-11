@@ -105,7 +105,7 @@
             SortContacts.SortOnConditionChooses(Contacts.listContacts);
             CustomPrint.PrintInRed($"All Contacts in address book {addressBookName}");
             CustomPrint.PrintDashLine();
-            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email","Date Added"));
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email", "Date Added"));
             CustomPrint.PrintDashLine();
             foreach (AddressBookModel item in listContacts)
             {
@@ -123,11 +123,11 @@
             SortContacts.SortOnConditionChooses(Contacts.listContacts);
             CustomPrint.PrintInRed($"All Contacts in every address book");
             CustomPrint.PrintDashLine();
-            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email","Date Added"));
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email", "Date Added"));
             CustomPrint.PrintDashLine();
             foreach (AddressBookModel item in listContacts)
             {
-                    Console.WriteLine(item);
+                Console.WriteLine(item);
             }
             CustomPrint.PrintDashLine();
 
@@ -145,7 +145,7 @@
             string state = Console.ReadLine();
             CustomPrint.PrintInRed("Search by City " + city + " are :\n");
             CustomPrint.PrintDashLine();
-            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email","Date Added"));
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email", "Date Added"));
             CustomPrint.PrintDashLine();
             foreach (AddressBookModel personDetails in listContacts.Where(x => (x.City.ToLower().Equals(city.ToLower()) && x.State.ToLower().Equals(state.ToLower()))))
             {
@@ -156,7 +156,7 @@
             Console.WriteLine("\nCount by City is : " + slNo);
             CustomPrint.PrintInRed("Search by State " + state + " are :\n");
             CustomPrint.PrintDashLine();
-            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email","Date Added"));
+            Console.WriteLine(CustomPrint.PrintRow("AddressBookName", "Name", "Address", "City", "State", "Zip", "PhoneNo", "Email", "Date Added"));
             CustomPrint.PrintDashLine();
             slNo = 0;
             foreach (AddressBookModel personDetails in listContacts)
@@ -170,7 +170,21 @@
             CustomPrint.PrintDashLine();
             Console.WriteLine("\nCount by State is : " + slNo);
         }
-
+        /// <summary>Retirves alls the contacts in given date range.</summary>
+        public static void AllContactsInGivenDateRange()
+        {
+            try
+            {
+                DateTime[] dates = AskForDateRange();
+                AddressBookDBWork.GetContactInGivenDateRange(dates[0], dates[1]);
+            }
+            catch(Exception e)
+            {
+                CustomPrint.PrintInMagenta(e.Message + "\nTry Again");
+                AllContactsInGivenDateRange();
+            }
+        }
+        
         /// <summary>Searches the dublicates.</summary>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
@@ -237,6 +251,40 @@
             Console.Write("Second Name : ");
             name[1] = Console.ReadLine();
             return name;
+        }
+        /// <summary>Asks for date range.</summary>
+        /// <returns>
+        ///   <br />
+        /// </returns>
+        /// <exception cref="AddressBookException">Entered Date is invalid
+        /// or
+        /// Entered Date is invalid
+        /// or
+        /// Start Date can not be after End Date</exception>
+        private static DateTime[] AskForDateRange()
+        {
+            DateTime[] dates = new DateTime[2];
+            Console.Write("Enter the Start Date in DD/MM/YYYY format : ");
+            try
+            {
+                dates[0] = Convert.ToDateTime(Console.ReadLine());
+            }
+            catch
+            {
+                throw new AddressBookException(AddressBookException.ExceptionType.INVALID_DATE, "Entered Date is invalid");
+            }
+            Console.Write("Enter the End Date in DD/MM/YYYY format : ");
+            try
+            {
+                dates[1] = Convert.ToDateTime(Console.ReadLine());
+            }
+            catch
+            {
+                throw new AddressBookException(AddressBookException.ExceptionType.INVALID_DATE, "Entered Date is invalid");
+            }
+            if (dates[0] > dates[1])
+                throw new AddressBookException(AddressBookException.ExceptionType.INVALID_DATE, "Start Date can not be after End Date");
+            return dates;
         }
     }
     /// <summary>Class for sorting contacts</summary>
@@ -306,5 +354,4 @@
                 SortByName(listContacts);
         }
     }
-
 }
