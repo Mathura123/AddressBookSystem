@@ -1,7 +1,9 @@
 ﻿namespace AddressBookSystem
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.SqlClient;
+    using System.Threading.Tasks;
 
     public class AddressBookDBWork
     {
@@ -175,6 +177,13 @@
                 return false;
             }
         }
+        /// <summary>Gets the contacts in given city.</summary>
+        /// <param name="city">The city.</param>
+        /// <param name="state">The state.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
+        /// <exception cref="AddressBookException">No Contacts in Given City</exception>
         public static bool GetContactsInGivenCity(string city, string state)
         {
             try
@@ -226,6 +235,12 @@
                 return false;
             }
         }
+        /// <summary>Gets the state of the contacts in given.</summary>
+        /// <param name="state">The state.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
+        /// <exception cref="AddressBookException">No Contacts in Given State</exception>
         public static bool GetContactsInGivenState(string state)
         {
             try
@@ -277,6 +292,11 @@
                 return false;
             }
         }
+        /// <summary>Adds the contact to database.</summary>
+        /// <param name="addressBookObj">The address book object.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public static bool AddContactToDB(AddressBookModel addressBookObj)
         {
             bool result;
@@ -320,6 +340,31 @@
             }
             return result;
         }
+        /// <summary>Adds the multiple contacts to database.</summary>
+        /// <param name="addressBookList">The address book list.</param>
+        public static void AddMultipleContactsToDB(List<AddressBookModel> addressBookList)
+        {
+            addressBookList.ForEach(addressBook =>
+            {
+                Task thread = new Task(() =>
+                {
+                    Console.WriteLine("Address Book being added for : " + addressBook.FirstName + " "+ addressBook.LastName);
+                    bool result =AddContactToDB(addressBook);
+                    if (result)
+                        Console.WriteLine("Address Book added for : " + addressBook.FirstName + " " + addressBook.LastName);
+                    else
+                        Console.WriteLine("Address Book could not add " + addressBook.FirstName + " " + addressBook.LastName);
+                }
+                );
+                thread.Start();
+                thread.Wait();
+            });
+        }
+        /// <summary>Deletes the contact from database.</summary>
+        /// <param name="addressBookObj">The address book object.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public static bool DeleteContactFromDB(AddressBookModel addressBookObj)
         {
             bool result;

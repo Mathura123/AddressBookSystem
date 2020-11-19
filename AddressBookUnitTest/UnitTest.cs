@@ -1,6 +1,7 @@
 using AddressBookSystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace AddressBookUnitTest
 {
@@ -100,6 +101,21 @@ namespace AddressBookUnitTest
             objModel.DateAdded = DateTime.Now;
             bool result = AddressBookDBWork.AddContactToDB(objModel);
             Assert.AreEqual(expected, result);
+        }
+        [TestMethod]
+        public void AddMultipleAddressBook_Should_Be_Able_ToAdd_AddressBooks()
+        {
+            List<AddressBookModel> modelList = new List<AddressBookModel>
+            {
+                new AddressBookModel(){ FirstName ="Hardy", LastName = "Sindu" ,Address = null, City = "Mumbai",State= "Maharastra", Zip = "888888", PhoneNo = "8888888888", Email= "har@abc.com"},
+                new AddressBookModel(){ FirstName ="Harshit", LastName = "Gupta" ,Address = null, City = "Mumbai",State= "Maharastra", Zip = "888888", PhoneNo = "8888888888", Email= "har@abc.com"},
+                new AddressBookModel(){ FirstName ="Ram", LastName = "Manohar" ,Address = null, City = "Mumbai",State= "Maharastra", Zip = "888888", PhoneNo = "8888888888", Email= "har@abc.com"},
+                new AddressBookModel(){ FirstName ="Abishey", LastName = "Anand" ,Address = "I90/78", City = "Mumbai",State= "Maharastra", Zip = "888888", PhoneNo = "8888888888", Email= "har@abc.com"},
+        };
+            DateTime startDateTime = DateTime.Now;
+            AddressBookDBWork.AddMultipleContactsToDB(modelList);
+            DateTime stopDateTime = DateTime.Now;
+            Console.WriteLine("Duration with thread: " + (startDateTime - stopDateTime));
         }
     }
 }
